@@ -1,6 +1,8 @@
 package tests;
 
 import dataManagePackage.Database;
+import dataManagePackage.Receipt.Receipt;
+import dataManagePackage.Receipt.ReceiptFactory;
 import dataManagePackage.Taxpayer;
 import gui.InsertNewReceiptJDialog;
 import inputManagePackage.InputSystem;
@@ -8,6 +10,9 @@ import org.junit.Test;
 
 import javax.xml.crypto.Data;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -89,25 +94,42 @@ public class DatabaseTest {
                 Database.getTaxpayersNameAfmValuesPairList());
     }
 
-//    @Test
-//    public void updateTaxpayerInputFile() {
-//
-//
+    @Test
+    public void updateTaxpayerInputFile() throws IOException {
+
+
+        InputSystem inputSystem = new InputSystem();
+
+        Path fileName = Path.of("InputFiles/130456093_INFO.txt");
+
+        String actual = Files.readString(fileName);
+
+        System.out.println(actual);
+
+
+
 //        Taxpayer taxpayer = new Taxpayer("Nikos Zisis", "130456094",
 //                "","10.0");
 //        Database.addTaxpayerToList(taxpayer);
-//        File file = new File(Database.getTaxpayersInfoFilesPath());
 //
-//       // InsertNewReceiptJDialog;
+//        Receipt receipt1 = receipt("Basic");
+//        Receipt receipt2 = receipt("Other");
 //
-//        File file1 = new File(Database.getTaxpayersInfoFilesPath());
+//        taxpayer.addReceiptToList(receipt1);
+//        taxpayer.addReceiptToList(receipt2);
 //
-//
-//
-//        Database.updateTaxpayerInputFile(0);
-//
-//        Database.getTaxpayersInfoFilesPath();
-//        assertFalse(file.equals(Database.getTaxpayersInfoFilesPath()));
-//
-//    }
+//        int sizeBfrDelete = taxpayer.getReceiptsArrayList().size();
+
+//        taxpayer.removeReceiptFromList(0);
+
+
+    }
+
+    private Receipt receipt(String type){
+
+        Receipt receipt = ReceiptFactory.createNewReceipt(type, "id", "date", "100", "", ""
+                , "", "", "");
+
+        return receipt;
+    }
 }

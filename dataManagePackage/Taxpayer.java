@@ -3,6 +3,7 @@ import dataManagePackage.Receipt.Receipt;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Taxpayer {
 	private String name;
@@ -14,6 +15,19 @@ public class Taxpayer {
 	private double taxDecrease;
 	private double totalTax;
 	private ArrayList<Receipt> receipts;
+	private double rates[][]= new double[][]{{5.35, 7.05, 7.05, 7.85, 9.85},
+			{5.35, 7.05, 7.85, 7.85, 9.85},
+			{5.35, 7.05, 7.85, 7.85, 9.85},
+			{5.35, 7.05, 7.05, 7.85, 9.85}};
+	private double incomes[][]= new double[][]{{36080.0, 90000.0, 143350.0, 254240.0},
+			{18040.0, 71680.0, 90000.0, 127120.0},
+			{24680.0, 81080.0, 90000.0, 152540.0},
+			{30390.0, 90000.0, 122110.0, 203390.0}};
+	private double values[][]= new double[][]{{0.0, 1930.28,5731.64,9492.82, 18197.69},
+			{0.0,965.14,4746.76, 6184.88, 9098.80},
+			{0.0,1320.38, 5296.58, 5996.80, 10906.19},
+			{0.0,1625.87, 5828.38, 8092.13, 14472.61}};
+
 	
 	public Taxpayer(String name, String afm, String familyStatus, String income){
 		this.name = name;
@@ -25,6 +39,7 @@ public class Taxpayer {
 		taxDecrease = 0;
 		
 		receipts = new ArrayList<Receipt>();
+
 	}
 
 	public Taxpayer() {
@@ -34,110 +49,70 @@ public class Taxpayer {
 	private void setBasicTaxBasedOnFamilyStatus(){
 		switch(familyStatus.toLowerCase()){
 			case("married filing jointly"):
-				basicTax = calculateTaxForMarriedFilingJointlyTaxpayerFamilyStatus(income);
+				basicTax = calculateTax(0, income, rates, values, incomes);
 				break;
 			case("married filing separately"):
-				basicTax = calculateTaxForMarriedFilingSeparately(income);
+				basicTax = calculateTax(1, income, rates, values, incomes);
 				break;
 			case("single"):
-				basicTax = calculateTaxForSingles(income);
+				basicTax =calculateTax(2, income, rates, values, incomes);
 				break;
 			case("head of household"):
-				basicTax = calculateTaxForHeadOfHousehold(income);
+				basicTax = calculateTax(3, income, rates, values, incomes);
 				break;
 		}
-		
+
 		totalTax = basicTax;
 	}
-	
-	public double calculateTaxForMarriedFilingJointlyTaxpayerFamilyStatus(double totalIncome){
-		double tax;
+	public double calculateTax(int pos, double totalIncome, double rates[][], double values[][], double incomes[][]){
 
-		if (totalIncome < 36080){
-			tax = (5.35/100) * totalIncome;
+		double tax = 0;
+//		boolean flag = false;
+//
+//		for(int i = 0; i < 4; i++){
+//
+//			if(totalIncome < incomes[pos][i]){
+//				System.out.println("Ela");
+//				if (i == 0){
+//					System.out.println("Ela IF");
+//					tax = values[pos][i] + (rates[pos][i]/100 * totalIncome);
+//				}
+//				else {
+//					System.out.println("Ela ELSE");
+//					tax = values[pos][i] + (rates[pos][i] / 100 * totalIncome - incomes[pos][i - 1]);
+//				}
+//				flag = true;
+//				break;
+//
+//			}
+//
+//		}
+//		if(flag==false) {
+//		 	tax = values[pos][4] + (rates[pos][4] / 100 * totalIncome - incomes[pos][3]);
+//			return tax;
+//		}else{
+//			return tax;
+//		}
+
+		if (totalIncome < incomes[pos][0]){
+			tax = values[pos][0] + (rates[pos][0]/100) * totalIncome;
 		}
-		else if (totalIncome < 90000){
-			tax = 1930.28 + ((7.05/100) * (totalIncome-36080));
+		else if (totalIncome < incomes[pos][1]){
+			tax = values[pos][1] + ((rates[pos][1]/100) * (totalIncome-incomes[pos][0]));
 		}
-		else if (totalIncome < 143350){
-			tax = 5731.64 + ((7.05/100) * (totalIncome-90000));
+		else if (totalIncome < incomes[pos][2]){
+			tax = values[pos][2] + ((rates[pos][2]/100) * (totalIncome-incomes[pos][1]));
 		}
-		else if (totalIncome < 254240){
-			tax = 9492.82 + ((7.85/100) * (totalIncome-143350));
+		else if (totalIncome < incomes[pos][3]){
+			tax = values[pos][3] + ((rates[pos][3]/100) * (totalIncome-incomes[pos][2]));
 		}
 		else{
-			tax = 18197.69 + ((9.85/100) * (totalIncome-254240));
+			tax = values[pos][4] + ((rates[pos][4]/100) * (totalIncome-incomes[pos][3]));
 		}
 
 		return tax;
 	}
-	
-	public double calculateTaxForMarriedFilingSeparately(double totalIncome){
-		double tax;
-		
-		if (totalIncome < 18040){
-			tax = (5.35/100) * totalIncome;
-		}
-		else if (totalIncome < 71680){
-			tax = 965.14 + ((7.05/100) * (totalIncome-18040));
-		}
-		else if (totalIncome < 90000){
-			tax = 4746.76 + ((7.85/100) * (totalIncome-71680));
-		}
-		else if (totalIncome < 127120){
-			tax = 6184.88 + ((7.85/100) * (totalIncome-90000));
-		}
-		else{
-			tax = 9098.80 + ((9.85/100) * (totalIncome-127120));
-		}
-		
-		return tax;
-	}
-	
-	public double calculateTaxForSingles(double totalIncome){
-		double tax;
-		
-		if (totalIncome < 24680){
-			tax = (5.35/100) * totalIncome;
-		}
-		else if (totalIncome < 81080){
-			tax = 1320.38 + ((7.05/100) * (totalIncome-24680));
-		}
-		else if (totalIncome < 90000){
-			tax = 5296.58 + ((7.85/100) * (totalIncome-81080));
-		}
-		else if (totalIncome < 152540){
-			tax = 5996.80 + ((7.85/100) * (totalIncome-90000));
-		}
-		else{
-			tax = 10906.19 + ((9.85/100) * (totalIncome-152540));
-		}
-		
-		return tax;
-	}
-	
-	public double calculateTaxForHeadOfHousehold(double totalIncome){
-		double tax;
-		
-		if (totalIncome < 30390){
-			tax = (5.35/100) * totalIncome;
-		}
-		else if (totalIncome < 90000){
-			tax = 1625.87 + ((7.05/100) * (totalIncome-30390));
-		}
-		else if (totalIncome < 122110){
-			tax = 5828.38 + ((7.05/100) * (totalIncome-90000));
-		}
-		else if (totalIncome < 203390){
-			tax = 8092.13 + ((7.85/100) * (totalIncome-122110));
-		}
-		else{
-			tax = 14472.61 + ((9.85/100) * (totalIncome-203390));
-		}
-		
-		return tax;
-	}
-	
+
 	public String toString(){
 		return "Name: "+name
 				+"\nAFM: "+afm
@@ -166,69 +141,82 @@ public class Taxpayer {
 		
 		return receiptsList;
 	}
-	
+
+	public double getSpecificReceiptsTotalAmount(String typeOfReceipt){
+
+		double totalAmount = 0;
+
+		for (Receipt receipt : receipts){
+			if (receipt.getKind().equals(typeOfReceipt)){
+				totalAmount += receipt.getAmount();
+			}
+		}
+
+		return (new BigDecimal(totalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+	}
 	public double getBasicReceiptsTotalAmount(){
 		double basicReceiptsTotalAmount = 0;
-		
+
 		for (Receipt receipt : receipts){
 			if (receipt.getKind().equals("Basic")){
 				basicReceiptsTotalAmount += receipt.getAmount();
 			}
 		}
-		
+
 		return (new BigDecimal(basicReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
-	
+
 	public double getEntertainmentReceiptsTotalAmount(){
 		double entertainmentReceiptsTotalAmount = 0;
-		
+
 		for (Receipt receipt : receipts){
 			if (receipt.getKind().equals("Entertainment")){
 				entertainmentReceiptsTotalAmount += receipt.getAmount();
 			}
 		}
-		
+
 		return (new BigDecimal(entertainmentReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
-	
+
 	public double getTravelReceiptsTotalAmount(){
 		double travelReceiptsTotalAmount = 0;
-		
+
 		for (Receipt receipt : receipts){
 			if (receipt.getKind().equals("Travel")){
 				travelReceiptsTotalAmount += receipt.getAmount();
 			}
 		}
-		
+
 		return (new BigDecimal(travelReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
-	
+
 	public double getHealthReceiptsTotalAmount(){
 		double healthReceiptsTotalAmount = 0;
-		
+
 		for (Receipt receipt : receipts){
 			if (receipt.getKind().equals("Health")){
 				healthReceiptsTotalAmount += receipt.getAmount();
 			}
 		}
-		
+
 		return (new BigDecimal(healthReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
-	
-	
-	
+
 	public double getOtherReceiptsTotalAmount(){
 		double otherReceiptsTotalAmount = 0;
-		
+
 		for (Receipt receipt : receipts){
 			if (receipt.getKind().equals("Other")){
 				otherReceiptsTotalAmount += receipt.getAmount();
 			}
 		}
-		
+
 		return (new BigDecimal(otherReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
-	
+
+
+
 	public double getTotalReceiptsAmount(){
 		double totalReceiptsAmount = 0;
 		
@@ -306,4 +294,6 @@ public class Taxpayer {
 		
 		totalTax = basicTax + taxIncrease - taxDecrease;
 	}
+
+
 }

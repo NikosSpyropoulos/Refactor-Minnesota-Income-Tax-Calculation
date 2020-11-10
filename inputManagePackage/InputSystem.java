@@ -31,8 +31,8 @@ public class InputSystem {
 		{
 			System.out.println("Problem opening " + afmInfoFile + " file.");
 			System.exit(0);
-		}			
-		
+		}
+
 		String taxpayerName = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Name: ");
 		String taxpayerAFM = getParameterValueFromTxtFileLine(inputStream.nextLine(), "AFM: ");
 		String taxpayerStatus = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Status: ");
