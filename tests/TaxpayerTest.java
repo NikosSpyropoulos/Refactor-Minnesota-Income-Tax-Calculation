@@ -15,14 +15,14 @@ public class TaxpayerTest {
 
     @Test
     public void calculateTaxForMarriedFilingJointlyTaxpayerFamilyStatus() {
-        double rates[][];
-        double incomes[][];
-        double values[][];
-        rates = new double[][]{{5.35, 7.05, 7.05, 7.85, 9.85}};
+        double rates[];
+        double incomes[];
+        double values[];
+        rates = new double[]{5.35, 7.05, 7.05, 7.85, 9.85};
 
-        incomes= new double[][]{{36080.0, 90000.0, 143350.0, 254240.0}};
+        incomes= new double[]{36080.0, 90000.0, 143350.0, 254240.0};
 
-        values= new double[][]{{0.0 ,1930.28,5731.64,9492.82, 18197.69}};
+        values= new double[]{0.0 ,1930.28,5731.64,9492.82, 18197.69};
 
         double tax= 0.0;
         double totalIncome = 1000.0;
@@ -43,7 +43,7 @@ public class TaxpayerTest {
             tax = 18197.69 + ((9.85/100) * (totalIncome-254240));
         }
 
-        assertEquals(tax, taxpayer.calculateTax(0, totalIncome,
+        assertEquals(tax, taxpayer.calculateTax( totalIncome,
                 rates, values, incomes));
     }
 //

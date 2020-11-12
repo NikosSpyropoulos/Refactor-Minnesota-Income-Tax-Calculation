@@ -34,6 +34,7 @@ public class Taxpayer {
 		this.familyStatus = familyStatus;
 		this.income = Double.parseDouble(income);
 		setBasicTaxBasedOnFamilyStatus();
+		objectFamilyStatus = new FamilyStatus();
 		taxIncrease = 0;
 		taxDecrease = 0;
 		
@@ -49,6 +50,7 @@ public class Taxpayer {
 
 		objectFamilyStatus = FamilyStatus.getFamilyStatus(familyStatus);
 
+		System.out.println(objectFamilyStatus.getIncomes());
 		basicTax = calculateTax(income, objectFamilyStatus.getIncomes(), objectFamilyStatus.getRates(), objectFamilyStatus.getValues() );
 
 //		switch(familyStatus.toLowerCase()){

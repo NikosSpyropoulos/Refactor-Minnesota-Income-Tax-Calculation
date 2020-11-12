@@ -25,11 +25,15 @@ public class FamilyStatus {
     private double[] incomes;
     private double[] values;
 
+    public FamilyStatus() {
+
+    }
+
     public double[] getRates() {return rates;}
     public double[] getIncomes() {return incomes;}
     public double[] getValues() {return values;}
 
-    private FamilyStatus(double[] rates, double[] incomes, double[] values) {
+    public FamilyStatus(double[] rates, double[] incomes, double[] values) {
 
         this.rates = rates;
         this.incomes = incomes;
