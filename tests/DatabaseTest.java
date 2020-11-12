@@ -7,12 +7,14 @@ import dataManagePackage.Taxpayer;
 import gui.InsertNewReceiptJDialog;
 import inputManagePackage.InputSystem;
 import org.junit.Test;
+import outputManagePackage.OutputSystem;
 
 import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -94,36 +96,29 @@ public class DatabaseTest {
                 Database.getTaxpayersNameAfmValuesPairList());
     }
 
-    @Test
-    public void updateTaxpayerInputFile() throws IOException {
-
-
-        InputSystem inputSystem = new InputSystem();
-
-        Path fileName = Path.of("InputFiles/130456093_INFO.txt");
-
-        String actual = Files.readString(fileName);
-
-        System.out.println(actual);
-
-
-
-//        Taxpayer taxpayer = new Taxpayer("Nikos Zisis", "130456094",
-//                "","10.0");
-//        Database.addTaxpayerToList(taxpayer);
+//    @Test
+//    public void updateTaxpayerInputFile() throws IOException {
 //
-//        Receipt receipt1 = receipt("Basic");
-//        Receipt receipt2 = receipt("Other");
 //
-//        taxpayer.addReceiptToList(receipt1);
-//        taxpayer.addReceiptToList(receipt2);
 //
-//        int sizeBfrDelete = taxpayer.getReceiptsArrayList().size();
-
-//        taxpayer.removeReceiptFromList(0);
-
-
-    }
+//        ArrayList<String > taxpayersAfmInfoFiles = new ArrayList<String>();
+//        taxpayersAfmInfoFiles.add("130456094_INFO.xml");
+//        InputSystem.addTaxpayersDataFromFilesIntoDatabase("InputFiles/130456094_INFO.xml", taxpayersAfmInfoFiles);
+//
+//        Path fileNameBefore = Path.of("InputFiles/130456094_INFO.xml");
+//        String stringBefore = Files.readString(fileNameBefore);
+//
+////        OutputSystem.saveUpdatedTaxpayerTxtInputFile("InputFiles/130456093_INFO.txt", 0);
+//
+//        Database.updateTaxpayerInputFile(0);
+//
+//        Path fileNameAfter = Path.of("InputFiles/130456094_INFO.xml");
+//        String stringAfter = Files.readString(fileNameBefore);
+//
+//
+//        assertEquals(stringBefore, stringAfter);
+//
+//    }
 
     private Receipt receipt(String type){
 

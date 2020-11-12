@@ -3,32 +3,31 @@ import dataManagePackage.Receipt.Receipt;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Taxpayer {
 	private String name;
 	private String afm;
 	private String familyStatus;
+	private FamilyStatus objectFamilyStatus;
 	private double income;
 	private double basicTax;
 	private double taxIncrease;
 	private double taxDecrease;
 	private double totalTax;
 	private ArrayList<Receipt> receipts;
-	private double rates[][]= new double[][]{{5.35, 7.05, 7.05, 7.85, 9.85},
-			{5.35, 7.05, 7.85, 7.85, 9.85},
-			{5.35, 7.05, 7.85, 7.85, 9.85},
-			{5.35, 7.05, 7.05, 7.85, 9.85}};
-	private double incomes[][]= new double[][]{{36080.0, 90000.0, 143350.0, 254240.0},
-			{18040.0, 71680.0, 90000.0, 127120.0},
-			{24680.0, 81080.0, 90000.0, 152540.0},
-			{30390.0, 90000.0, 122110.0, 203390.0}};
-	private double values[][]= new double[][]{{0.0, 1930.28,5731.64,9492.82, 18197.69},
-			{0.0,965.14,4746.76, 6184.88, 9098.80},
-			{0.0,1320.38, 5296.58, 5996.80, 10906.19},
-			{0.0,1625.87, 5828.38, 8092.13, 14472.61}};
+//	private double rates[][]= new double[][]{{5.35, 7.05, 7.05, 7.85, 9.85},
+//			{5.35, 7.05, 7.85, 7.85, 9.85},
+//			{5.35, 7.05, 7.85, 7.85, 9.85},
+//			{5.35, 7.05, 7.05, 7.85, 9.85}};
+//	private double incomes[][]= new double[][]{{36080.0, 90000.0, 143350.0, 254240.0},
+//			{18040.0, 71680.0, 90000.0, 127120.0},
+//			{24680.0, 81080.0, 90000.0, 152540.0},
+//			{30390.0, 90000.0, 122110.0, 203390.0}};
+//	private double values[][]= new double[][]{{0.0, 1930.28,5731.64,9492.82, 18197.69},
+//			{0.0,965.14,4746.76, 6184.88, 9098.80},
+//			{0.0,1320.38, 5296.58, 5996.80, 10906.19},
+//			{0.0,1625.87, 5828.38, 8092.13, 14472.61}};
 
-	
 	public Taxpayer(String name, String afm, String familyStatus, String income){
 		this.name = name;
 		this.afm = afm;
@@ -47,24 +46,29 @@ public class Taxpayer {
 	}
 
 	private void setBasicTaxBasedOnFamilyStatus(){
-		switch(familyStatus.toLowerCase()){
-			case("married filing jointly"):
-				basicTax = calculateTax(0, income, rates, values, incomes);
-				break;
-			case("married filing separately"):
-				basicTax = calculateTax(1, income, rates, values, incomes);
-				break;
-			case("single"):
-				basicTax =calculateTax(2, income, rates, values, incomes);
-				break;
-			case("head of household"):
-				basicTax = calculateTax(3, income, rates, values, incomes);
-				break;
-		}
+
+		objectFamilyStatus = FamilyStatus.getFamilyStatus(familyStatus);
+
+		basicTax = calculateTax(income, objectFamilyStatus.getIncomes(), objectFamilyStatus.getRates(), objectFamilyStatus.getValues() );
+
+//		switch(familyStatus.toLowerCase()){
+//			case("married filing jointly"):
+//				basicTax = calculateTax(0, income, rates, values, incomes);
+//				break;
+//			case("married filing separately"):
+//				basicTax = calculateTax(1, income, rates, values, incomes);
+//				break;
+//			case("single"):
+//				basicTax =calculateTax(2, income, rates, values, incomes);
+//				break;
+//			case("head of household"):
+//				basicTax = calculateTax(3, income, rates, values, incomes);
+//				break;
+//		}
 
 		totalTax = basicTax;
 	}
-	public double calculateTax(int pos, double totalIncome, double rates[][], double values[][], double incomes[][]){
+	public double calculateTax(/*int pos,*/ double totalIncome, double[] rates, double[] values, double[] incomes){
 
 		double tax = 0;
 //		boolean flag = false;
@@ -94,20 +98,20 @@ public class Taxpayer {
 //			return tax;
 //		}
 
-		if (totalIncome < incomes[pos][0]){
-			tax = values[pos][0] + (rates[pos][0]/100) * totalIncome;
+		if (totalIncome < incomes[0]){
+			tax = values[0] + (rates[0]/100) * totalIncome;
 		}
-		else if (totalIncome < incomes[pos][1]){
-			tax = values[pos][1] + ((rates[pos][1]/100) * (totalIncome-incomes[pos][0]));
+		else if (totalIncome < incomes[1]){
+			tax = values[1] + (rates[1]/100 * (totalIncome-incomes[0]));
 		}
-		else if (totalIncome < incomes[pos][2]){
-			tax = values[pos][2] + ((rates[pos][2]/100) * (totalIncome-incomes[pos][1]));
+		else if (totalIncome < incomes[2]){
+			tax = values[2] + (rates[2]/100 * (totalIncome-incomes[1]));
 		}
-		else if (totalIncome < incomes[pos][3]){
-			tax = values[pos][3] + ((rates[pos][3]/100) * (totalIncome-incomes[pos][2]));
+		else if (totalIncome < incomes[3]){
+			tax = values[3] + (rates[3]/100 * (totalIncome-incomes[2]));
 		}
 		else{
-			tax = values[pos][4] + ((rates[pos][4]/100) * (totalIncome-incomes[pos][3]));
+			tax = values[4] + (rates[4]/100 * (totalIncome-incomes[3]));
 		}
 
 		return tax;
