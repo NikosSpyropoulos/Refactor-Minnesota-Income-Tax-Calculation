@@ -7,34 +7,25 @@ import java.util.ArrayList;
 public class Taxpayer {
 	private String name;
 	private String afm;
-	private String familyStatus;
-	private FamilyStatus objectFamilyStatus;
+	private FamilyStatus familyStatus;
 	private double income;
 	private double basicTax;
 	private double taxIncrease;
 	private double taxDecrease;
 	private double totalTax;
 	private ArrayList<Receipt> receipts;
-//	private double rates[][]= new double[][]{{5.35, 7.05, 7.05, 7.85, 9.85},
-//			{5.35, 7.05, 7.85, 7.85, 9.85},
-//			{5.35, 7.05, 7.85, 7.85, 9.85},
-//			{5.35, 7.05, 7.05, 7.85, 9.85}};
-//	private double incomes[][]= new double[][]{{36080.0, 90000.0, 143350.0, 254240.0},
-//			{18040.0, 71680.0, 90000.0, 127120.0},
-//			{24680.0, 81080.0, 90000.0, 152540.0},
-//			{30390.0, 90000.0, 122110.0, 203390.0}};
-//	private double values[][]= new double[][]{{0.0, 1930.28,5731.64,9492.82, 18197.69},
-//			{0.0,965.14,4746.76, 6184.88, 9098.80},
-//			{0.0,1320.38, 5296.58, 5996.80, 10906.19},
-//			{0.0,1625.87, 5828.38, 8092.13, 14472.61}};
 
-	public Taxpayer(String name, String afm, String familyStatus, String income){
+	public FamilyStatus getFamilyStatus(){
+		return familyStatus;
+	}
+
+	public Taxpayer(String name, String afm, FamilyStatus familyStatus, String income){
 		this.name = name;
 		this.afm = afm;
 		this.familyStatus = familyStatus;
 		this.income = Double.parseDouble(income);
 		setBasicTaxBasedOnFamilyStatus();
-		objectFamilyStatus = new FamilyStatus();
+
 		taxIncrease = 0;
 		taxDecrease = 0;
 		
@@ -48,72 +39,28 @@ public class Taxpayer {
 
 	private void setBasicTaxBasedOnFamilyStatus(){
 
-		objectFamilyStatus = FamilyStatus.getFamilyStatus(familyStatus);
-
-		System.out.println(objectFamilyStatus.getIncomes());
-		basicTax = calculateTax(income, objectFamilyStatus.getIncomes(), objectFamilyStatus.getRates(), objectFamilyStatus.getValues() );
-
-//		switch(familyStatus.toLowerCase()){
-//			case("married filing jointly"):
-//				basicTax = calculateTax(0, income, rates, values, incomes);
-//				break;
-//			case("married filing separately"):
-//				basicTax = calculateTax(1, income, rates, values, incomes);
-//				break;
-//			case("single"):
-//				basicTax =calculateTax(2, income, rates, values, incomes);
-//				break;
-//			case("head of household"):
-//				basicTax = calculateTax(3, income, rates, values, incomes);
-//				break;
-//		}
+		basicTax = calculateTax(income, getFamilyStatus().getRates(), getFamilyStatus().getValues(), getFamilyStatus().getIncomes() );
 
 		totalTax = basicTax;
 	}
-	public double calculateTax(/*int pos,*/ double totalIncome, double[] rates, double[] values, double[] incomes){
+	public double calculateTax(double totalIncome,ArrayList<Double> rates, ArrayList<Double> values, ArrayList<Double> incomes){
 
 		double tax = 0;
-//		boolean flag = false;
-//
-//		for(int i = 0; i < 4; i++){
-//
-//			if(totalIncome < incomes[pos][i]){
-//				System.out.println("Ela");
-//				if (i == 0){
-//					System.out.println("Ela IF");
-//					tax = values[pos][i] + (rates[pos][i]/100 * totalIncome);
-//				}
-//				else {
-//					System.out.println("Ela ELSE");
-//					tax = values[pos][i] + (rates[pos][i] / 100 * totalIncome - incomes[pos][i - 1]);
-//				}
-//				flag = true;
-//				break;
-//
-//			}
-//
-//		}
-//		if(flag==false) {
-//		 	tax = values[pos][4] + (rates[pos][4] / 100 * totalIncome - incomes[pos][3]);
-//			return tax;
-//		}else{
-//			return tax;
-//		}
 
-		if (totalIncome < incomes[0]){
-			tax = values[0] + (rates[0]/100) * totalIncome;
+		if (totalIncome < incomes.get(0)){
+			tax = values.get(0) + (rates.get(0) /100) * totalIncome;
 		}
-		else if (totalIncome < incomes[1]){
-			tax = values[1] + (rates[1]/100 * (totalIncome-incomes[0]));
+		else if (totalIncome < incomes.get(1)){
+			tax = values.get(1) + (rates.get(1) /100 * (totalIncome- incomes.get(0)));
 		}
-		else if (totalIncome < incomes[2]){
-			tax = values[2] + (rates[2]/100 * (totalIncome-incomes[1]));
+		else if (totalIncome < incomes.get(2)){
+			tax = values.get(2) + (rates.get(2) /100 * (totalIncome- incomes.get(1)));
 		}
-		else if (totalIncome < incomes[3]){
-			tax = values[3] + (rates[3]/100 * (totalIncome-incomes[2]));
+		else if (totalIncome < incomes.get(3)){
+			tax = values.get(3) + (rates.get(3) /100 * (totalIncome- incomes.get(2)));
 		}
 		else{
-			tax = values[4] + (rates[4]/100 * (totalIncome-incomes[3]));
+			tax = values.get(4) + (rates.get(4) /100 * (totalIncome- incomes.get(3)));
 		}
 
 		return tax;
@@ -122,7 +69,7 @@ public class Taxpayer {
 	public String toString(){
 		return "Name: "+name
 				+"\nAFM: "+afm
-				+"\nStatus: "+familyStatus
+				+"\nStatus: "+getFamilyStatus()
 				+"\nIncome: "+String.format("%.2f", income)
 				+"\nBasicTax: "+String.format("%.2f", basicTax)
 				+"\nTaxIncrease: "+String.format("%.2f", taxIncrease)
@@ -161,67 +108,6 @@ public class Taxpayer {
 		return (new BigDecimal(totalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
 	}
-	public double getBasicReceiptsTotalAmount(){
-		double basicReceiptsTotalAmount = 0;
-
-		for (Receipt receipt : receipts){
-			if (receipt.getKind().equals("Basic")){
-				basicReceiptsTotalAmount += receipt.getAmount();
-			}
-		}
-
-		return (new BigDecimal(basicReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-	}
-
-	public double getEntertainmentReceiptsTotalAmount(){
-		double entertainmentReceiptsTotalAmount = 0;
-
-		for (Receipt receipt : receipts){
-			if (receipt.getKind().equals("Entertainment")){
-				entertainmentReceiptsTotalAmount += receipt.getAmount();
-			}
-		}
-
-		return (new BigDecimal(entertainmentReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-	}
-
-	public double getTravelReceiptsTotalAmount(){
-		double travelReceiptsTotalAmount = 0;
-
-		for (Receipt receipt : receipts){
-			if (receipt.getKind().equals("Travel")){
-				travelReceiptsTotalAmount += receipt.getAmount();
-			}
-		}
-
-		return (new BigDecimal(travelReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-	}
-
-	public double getHealthReceiptsTotalAmount(){
-		double healthReceiptsTotalAmount = 0;
-
-		for (Receipt receipt : receipts){
-			if (receipt.getKind().equals("Health")){
-				healthReceiptsTotalAmount += receipt.getAmount();
-			}
-		}
-
-		return (new BigDecimal(healthReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-	}
-
-	public double getOtherReceiptsTotalAmount(){
-		double otherReceiptsTotalAmount = 0;
-
-		for (Receipt receipt : receipts){
-			if (receipt.getKind().equals("Other")){
-				otherReceiptsTotalAmount += receipt.getAmount();
-			}
-		}
-
-		return (new BigDecimal(otherReceiptsTotalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-	}
-
-
 
 	public double getTotalReceiptsAmount(){
 		double totalReceiptsAmount = 0;
@@ -239,10 +125,6 @@ public class Taxpayer {
 	
 	public String getAFM(){
 		return afm;
-	}
-	
-	public String getFamilyStatus(){
-		return familyStatus;
 	}
 	
 	public double getIncome(){

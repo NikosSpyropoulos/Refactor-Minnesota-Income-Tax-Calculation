@@ -6,24 +6,22 @@ import dataManagePackage.Receipt.ReceiptFactory;
 import dataManagePackage.Taxpayer;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 
 public class TaxpayerTest {
 
-    private static Taxpayer taxpayer = new Taxpayer("name", "afm", "familyStatus", "100");
 
     @Test
     public void calculateTaxForMarriedFilingJointlyTaxpayerFamilyStatus() {
-        double rates[];
-        double incomes[];
-        double values[];
-        rates = new double[]{5.35, 7.05, 7.05, 7.85, 9.85};
+        Taxpayer taxpayer = taxpayer();
 
-        incomes= new double[]{36080.0, 90000.0, 143350.0, 254240.0};
-
-        values= new double[]{0.0 ,1930.28,5731.64,9492.82, 18197.69};
-
+        ArrayList<Double> rates = new ArrayList<>();
+        ArrayList<Double> incomes = new ArrayList<>();
+        ArrayList<Double> values = new ArrayList<>();;
+        initializeLists(rates, incomes, values);
         double tax= 0.0;
         double totalIncome = 1000.0;
 
@@ -46,33 +44,10 @@ public class TaxpayerTest {
         assertEquals(tax, taxpayer.calculateTax( totalIncome,
                 rates, values, incomes));
     }
-//
-//    @Test
-//    void calculateTaxForMarriedFilingSeparately() {
-//    }
-//
-//    @Test
-//    void calculateTaxForSingles() {
-//    }
-//
-//    @Test
-//    void calculateTaxForHeadOfHousehold() {
-//    }
-//
-//
-//    @Test
-//    void getReceipt() {
-//
-//
-//    }
-//
-//    @Test
-//    void getReceiptsArrayList() {
-//    }
-//
+
     @Test
     public void getReceiptsList() {
-
+        Taxpayer taxpayer = taxpayer();
         taxpayer.addReceiptToList(receipt("Basic"));
         taxpayer.addReceiptToList(receipt("Basic"));
 
@@ -85,7 +60,7 @@ public class TaxpayerTest {
 
     @Test
     public void getSpecificReceiptsTotalAmount() {
-
+        Taxpayer taxpayer = taxpayer();
         taxpayer.addReceiptToList(receipt("Basic"));
         taxpayer.addReceiptToList(receipt("Basic"));
 
@@ -93,25 +68,9 @@ public class TaxpayerTest {
 
     }
 
-//    @Test
-//    void getEntertainmentReceiptsTotalAmount() {
-//    }
-//
-//    @Test
-//    void getTravelReceiptsTotalAmount() {
-//    }
-//
-//    @Test
-//    void getHealthReceiptsTotalAmount() {
-//    }
-//
-//    @Test
-//    void getOtherReceiptsTotalAmount() {
-//    }
-//
     @Test
     public void getTotalReceiptsAmount() {
-
+        Taxpayer taxpayer = taxpayer();
         taxpayer.addReceiptToList(receipt("Basic"));
         taxpayer.addReceiptToList(receipt("Other"));
         assertEquals(200.0, taxpayer.getTotalReceiptsAmount());
@@ -119,7 +78,7 @@ public class TaxpayerTest {
 
     @Test
     public void addReceiptToList() {
-
+        Taxpayer taxpayer = taxpayer();
         int size = taxpayer.getReceiptsArrayList().size();
         taxpayer.addReceiptToList(receipt("Basic"));
 
@@ -129,7 +88,7 @@ public class TaxpayerTest {
 
     @Test
     public void removeReceiptFromList() {
-
+        Taxpayer taxpayer = taxpayer();
         taxpayer.addReceiptToList(receipt("Basic"));
         int size = taxpayer.getReceiptsArrayList().size();
         taxpayer.removeReceiptFromList(0);
@@ -139,7 +98,7 @@ public class TaxpayerTest {
 
     @Test
     public void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts() {
-
+        Taxpayer taxpayer = taxpayer();
         double income = taxpayer.getIncome();
         double basicTax = taxpayer.getBasicTax();
         double totalReceiptsAmount = taxpayer.getTotalReceiptsAmount();
@@ -170,5 +129,32 @@ public class TaxpayerTest {
                 , "", "", "");
 
         return receipt;
+    }
+
+    private Taxpayer taxpayer(){
+
+        return new Taxpayer("Nikos Zisis", "130456094",
+                null,"10.0");
+    }
+
+    private void initializeLists (ArrayList<Double> rates, ArrayList<Double> incomes, ArrayList<Double> values ){
+
+        rates.add(5.35);
+        rates.add(7.05);
+        rates.add(7.05);
+        rates.add(7.85);
+        rates.add(9.85);
+
+        incomes.add(36080.0);
+        incomes.add(90000.0);
+        incomes.add(143350.0);
+        incomes.add(254240.0);
+
+        values.add(0.0);
+        values.add(1930.28);
+        values.add(5731.64);
+        values.add(9492.82);
+        values.add(18197.69);
+
     }
 }

@@ -1,6 +1,7 @@
 package tests;
 
 import dataManagePackage.Database;
+import dataManagePackage.FamilyStatus;
 import dataManagePackage.Receipt.Receipt;
 import dataManagePackage.Receipt.ReceiptFactory;
 import dataManagePackage.Taxpayer;
@@ -25,9 +26,7 @@ import static org.junit.Assert.assertThat;
 
 public class DatabaseTest {
 
-    private static InputSystem inputSystem;
     private Database myDatabase = new Database();
-    private static String filepath;
 
 
     @Test
@@ -38,8 +37,7 @@ public class DatabaseTest {
     @Test
     public void addTaxpayerToList() {
 
-        Taxpayer taxpayer = new Taxpayer("Nikos Zisis", "130456094",
-                "","10.0");
+        Taxpayer taxpayer = taxpayer();
         int size = Database.getTaxpayersArrayListSize();
         Database.addTaxpayerToList(taxpayer);
         assertEquals(size + 1, myDatabase.getTaxpayersArrayListSize());
@@ -48,8 +46,7 @@ public class DatabaseTest {
     @Test
     public void getTaxpayerFromArrayList() {
 
-        Taxpayer taxpayer = new Taxpayer("Nikos Zisis", "130456094",
-                "","10.0");
+        Taxpayer taxpayer = taxpayer();
         Database.addTaxpayerToList(taxpayer);
         assertEquals(taxpayer, Database.getTaxpayerFromArrayList(0));
     }
@@ -59,8 +56,7 @@ public class DatabaseTest {
     @Test
     public void removeTaxpayerFromArrayList() {
 
-        Taxpayer taxpayer = new Taxpayer("Nikos Zisis", "130456094",
-                "","10.0");
+        Taxpayer taxpayer = taxpayer();
         Database.addTaxpayerToList(taxpayer);
         int size = Database.getTaxpayersArrayListSize();
 
@@ -72,21 +68,16 @@ public class DatabaseTest {
     @Test
     public void getTaxpayerNameAfmValuesPairList() {
         String nameAfm  = "Nikos Zisis | 130456094";
-        Taxpayer taxpayer = new Taxpayer("Nikos Zisis", "130456094",
-                 "","10.0");
-       // ArrayList<Taxpayer> taxpayerArrayList = new ArrayList<>();
+        Taxpayer taxpayer = taxpayer();
         Database.addTaxpayerToList(taxpayer);
-        //taxpayerArrayList.add(taxpayer);
         assertEquals(nameAfm, Database.getTaxpayerNameAfmValuesPairList(0));
-
 
     }
 
     @Test
     public void getTaxpayersNameAfmValuesPairList() {
 
-        Taxpayer taxpayer = new Taxpayer("Nikos Zisis", "130456094",
-                "","10.0");
+        Taxpayer taxpayer = taxpayer();
         Database.addTaxpayerToList(taxpayer);
         Database.addTaxpayerToList(taxpayer);
 
@@ -126,5 +117,11 @@ public class DatabaseTest {
                 , "", "", "");
 
         return receipt;
+    }
+
+    private Taxpayer taxpayer(){
+
+        return new Taxpayer("Nikos Zisis", "130456094",
+                null,"10.0");
     }
 }

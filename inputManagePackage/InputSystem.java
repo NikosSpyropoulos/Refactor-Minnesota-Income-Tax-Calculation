@@ -2,8 +2,9 @@ package inputManagePackage;
 import dataManagePackage.*;
 import dataManagePackage.Receipt.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.lang.model.type.ArrayType;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +21,43 @@ public class InputSystem {
 			}
 		}
 	}
-	
+	private static ArrayList<ArrayList<Double>> familyStatusInfo(String familyStatus) throws IOException {
+
+		FileReader input = null;
+		input = new FileReader("inputManagePackage/valuesForCalcTax");
+
+		BufferedReader bufRead = new BufferedReader(input);
+		String myLine = null;
+		int lineCounter = 0;
+		boolean flagStatus = false; // found right status
+
+		ArrayList<ArrayList<Double>> valuesOfStatusList = new ArrayList<ArrayList<Double>>();
+
+		while (lineCounter < 3){
+			myLine = bufRead.readLine();
+
+			if(myLine.equals(familyStatus.toLowerCase())){
+				flagStatus = true;
+				myLine = bufRead.readLine();
+			}
+
+			if(flagStatus){
+				String[] values = myLine.split(" ");
+				ArrayList<Double> doubleValues = new ArrayList<Double>();
+
+				for(int i =0; i<values.length; i++){
+
+					doubleValues.add(Double.parseDouble(values[i]));}
+
+				valuesOfStatusList.add(doubleValues);
+				lineCounter++;
+			}
+
+		}
+
+		return valuesOfStatusList;
+	}
+
 	private static void loadTaxpayerDataFromTxtFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile){
 		Scanner inputStream = null;
 		try
@@ -37,8 +74,17 @@ public class InputSystem {
 		String taxpayerAFM = getParameterValueFromTxtFileLine(inputStream.nextLine(), "AFM: ");
 		String taxpayerStatus = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Status: ");
 		String taxpayerIncome = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Income: ");
-		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerStatus, taxpayerIncome);
-		
+
+		ArrayList<ArrayList<Double>> valuesOfStatusList = new ArrayList<>();
+		try {
+			valuesOfStatusList = familyStatusInfo(taxpayerStatus);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM,FamilyStatus.initializeFamilyInfo(taxpayerStatus, valuesOfStatusList) , taxpayerIncome);
+
+
 		String fileLine;
 		while (inputStream.hasNextLine())
 		{
@@ -83,8 +129,17 @@ public class InputSystem {
 		String taxpayerAFM = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<AFM> ", " </AFM>");
 		String taxpayerStatus = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Status> ", " </Status>");
 		String taxpayerIncome = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Income> ", " </Income>");
-		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerStatus, taxpayerIncome);
-		
+
+		ArrayList<ArrayList<Double>> valuesOfStatusList = new ArrayList<>();
+		try {
+			valuesOfStatusList = familyStatusInfo(taxpayerStatus);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM,FamilyStatus.initializeFamilyInfo(taxpayerStatus, valuesOfStatusList) , taxpayerIncome);
+
+
 		String fileLine;
 		while (inputStream.hasNextLine())
 		{
@@ -113,4 +168,6 @@ public class InputSystem {
 	private static String getParameterValueFromXmlFileLine(String fileLine, String parameterStartField, String parameterEndField){
 		return fileLine.substring(parameterStartField.length(), fileLine.length()-parameterEndField.length());
 	}
+
+
 }
