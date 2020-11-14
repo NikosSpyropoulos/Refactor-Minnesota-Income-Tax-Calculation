@@ -38,8 +38,8 @@ public class TaxpayerTest {
         }
 
         assertEquals(tax, taxpayer.calculateTax( totalIncome,
-                taxpayer.getFamilyStatus().getRates(), taxpayer.getFamilyStatus().getValues(),
-                taxpayer.getFamilyStatus().getIncomes()));
+                taxpayer.getFamilyStatusObject().getRates(), taxpayer.getFamilyStatusObject().getValues(),
+                taxpayer.getFamilyStatusObject().getIncomes()));
     }
 
     @Test

@@ -15,8 +15,22 @@ public class Taxpayer {
 	private double totalTax;
 	private ArrayList<Receipt> receipts;
 
-	public FamilyStatus getFamilyStatus(){
+	public FamilyStatus getFamilyStatusObject(){
 		return familyStatus;
+	}
+
+	public String getFamilyStatus(){
+
+		if (FamilyStatus.SINGLE.equals(getFamilyStatusObject())) {
+			return "Single";
+		} else if (FamilyStatus.MARRIED_FILLING_JOINTLY.equals(getFamilyStatusObject())) {
+			return "Married Filing Jointly";
+		} else if (FamilyStatus.HEAD_OF_HOUSEHOLD.equals(getFamilyStatusObject())) {
+			return "Head Of Household";
+		} else if (FamilyStatus.MARRIED_FILLING_SEPARATELY.equals(getFamilyStatusObject())) {
+			return "Married Filling Separately";
+		}
+		return null;
 	}
 
 	public Taxpayer(String name, String afm, FamilyStatus familyStatus, String income){
@@ -36,7 +50,7 @@ public class Taxpayer {
 
 	private void setBasicTaxBasedOnFamilyStatus(){
 
-		basicTax = calculateTax(income, getFamilyStatus().getRates(), getFamilyStatus().getValues(), getFamilyStatus().getIncomes() );
+		basicTax = calculateTax(income, getFamilyStatusObject().getRates(), getFamilyStatusObject().getValues(), getFamilyStatusObject().getIncomes() );
 
 		totalTax = basicTax;
 	}

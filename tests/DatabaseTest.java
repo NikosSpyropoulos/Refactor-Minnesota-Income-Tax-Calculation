@@ -4,10 +4,22 @@ import dataManagePackage.Database;
 import dataManagePackage.FamilyStatus;
 import dataManagePackage.Receipt.Receipt;
 import dataManagePackage.Taxpayer;
+import gui.TaxpayerReceiptsManagementJDialog;
+import inputManagePackage.InputSystem;
 import org.junit.Test;
+import outputManagePackage.OutputSystem;
 
+import javax.xml.crypto.Data;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertArrayEquals;
@@ -79,24 +91,34 @@ public class DatabaseTest {
 //    @Test
 //    public void updateTaxpayerInputFile() throws IOException {
 //
+//        List<String> files = new ArrayList<>();
+//        files.add("130456093_INFO.txt");
+//        files.add("130456094_INFO.xml");
+//        Path fileName = Path.of("InputFiles/130456093_INFO.txt");
+//        InputSystem.addTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
+//
+//        Taxpayer taxpayer1 = Database.getTaxpayerFromArrayList(0);
+//        ArrayList<Receipt> receipt1 = taxpayer1.getReceiptsArrayList();
 //
 //
-//        ArrayList<String > taxpayersAfmInfoFiles = new ArrayList<String>();
-//        taxpayersAfmInfoFiles.add("130456094_INFO.xml");
-//        InputSystem.addTaxpayersDataFromFilesIntoDatabase("InputFiles/130456094_INFO.xml", taxpayersAfmInfoFiles);
 //
-//        Path fileNameBefore = Path.of("InputFiles/130456094_INFO.xml");
-//        String stringBefore = Files.readString(fileNameBefore);
-//
-////        OutputSystem.saveUpdatedTaxpayerTxtInputFile("InputFiles/130456093_INFO.txt", 0);
-//
-//        Database.updateTaxpayerInputFile(0);
-//
-//        Path fileNameAfter = Path.of("InputFiles/130456094_INFO.xml");
-//        String stringAfter = Files.readString(fileNameBefore);
+//        TaxpayerReceiptsManagementJDialog taxpayerReceiptsManagementJDialog =
+//                new TaxpayerReceiptsManagementJDialog(null, 0);
+//        taxpayerReceiptsManagementJDialog.
 //
 //
-//        assertEquals(stringBefore, stringAfter);
+//        String fileBfrEdit = Files.readString(fileName);
+//
+//        OutputSystem.saveUpdatedTaxpayerTxtInputFile(
+//                "D:\\SoftDevII-ProjectMaterial-2021\\project-material\\Minnesota Income Tax Calculation Project\\InputFiles"
+//                , 0);
+//
+//       // Database.updateTaxpayerInputFile(0);
+//
+//        String fileAfterEdit = Files.readString(fileName);
+//
+//        assertThat(fileBfrEdit, not(fileAfterEdit));
+//
 //
 //    }
 
