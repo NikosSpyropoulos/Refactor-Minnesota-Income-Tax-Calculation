@@ -3,21 +3,10 @@ package tests;
 import dataManagePackage.Database;
 import dataManagePackage.FamilyStatus;
 import dataManagePackage.Receipt.Receipt;
-import dataManagePackage.Receipt.ReceiptFactory;
 import dataManagePackage.Taxpayer;
-import gui.InsertNewReceiptJDialog;
-import inputManagePackage.InputSystem;
 import org.junit.Test;
-import outputManagePackage.OutputSystem;
 
-import javax.xml.crypto.Data;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
@@ -113,7 +102,7 @@ public class DatabaseTest {
 
     private Receipt receipt(String type){
 
-        Receipt receipt = ReceiptFactory.createNewReceipt(type, "id", "date", "100", "", ""
+        Receipt receipt = new Receipt(type, "id", "date", "100", "", ""
                 , "", "", "");
 
         return receipt;

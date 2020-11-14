@@ -1,9 +1,7 @@
 package tests;
 
-import dataManagePackage.Database;
 import dataManagePackage.FamilyStatus;
 import dataManagePackage.Receipt.Receipt;
-import dataManagePackage.Receipt.ReceiptFactory;
 import dataManagePackage.Taxpayer;
 import org.junit.Test;
 
@@ -125,7 +123,7 @@ public class TaxpayerTest {
 
     private Receipt receipt(String type){
 
-        Receipt receipt = ReceiptFactory.createNewReceipt(type, "id", "date", "100", "", ""
+        Receipt receipt = new Receipt(type, "id", "date", "100", "", ""
                 , "", "", "");
 
         return receipt;
