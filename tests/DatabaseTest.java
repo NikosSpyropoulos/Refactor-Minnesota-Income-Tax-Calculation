@@ -119,9 +119,40 @@ public class DatabaseTest {
         return receipt;
     }
 
+
     private Taxpayer taxpayer(){
+        ArrayList<Double> rates = new ArrayList<>();
+        ArrayList<Double> incomes = new ArrayList<>();
+        ArrayList<Double> values = new ArrayList<>();
+        initializeLists(rates, incomes, values);
+
+        ArrayList<ArrayList<Double>> valuesOfStatusList = new ArrayList<>();
+        valuesOfStatusList.add(rates);
+        valuesOfStatusList.add(incomes);
+        valuesOfStatusList.add(values);
 
         return new Taxpayer("Nikos Zisis", "130456094",
-                null,"10.0");
+                FamilyStatus.initializeFamilyInfo("Married filing jointly", valuesOfStatusList),"10.0");
+    }
+
+    private void initializeLists (ArrayList<Double> rates, ArrayList<Double> incomes, ArrayList<Double> values ){
+
+        rates.add(5.35);
+        rates.add(7.05);
+        rates.add(7.05);
+        rates.add(7.85);
+        rates.add(9.85);
+
+        incomes.add(36080.0);
+        incomes.add(90000.0);
+        incomes.add(143350.0);
+        incomes.add(254240.0);
+
+        values.add(0.0);
+        values.add(1930.28);
+        values.add(5731.64);
+        values.add(9492.82);
+        values.add(18197.69);
+
     }
 }

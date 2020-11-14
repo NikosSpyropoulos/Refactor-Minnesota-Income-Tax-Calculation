@@ -1,11 +1,13 @@
 package tests;
 
 import dataManagePackage.Database;
+import dataManagePackage.FamilyStatus;
 import dataManagePackage.Receipt.Receipt;
 import dataManagePackage.Receipt.ReceiptFactory;
 import dataManagePackage.Taxpayer;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
@@ -18,10 +20,6 @@ public class TaxpayerTest {
     public void calculateTaxForMarriedFilingJointlyTaxpayerFamilyStatus() {
         Taxpayer taxpayer = taxpayer();
 
-        ArrayList<Double> rates = new ArrayList<>();
-        ArrayList<Double> incomes = new ArrayList<>();
-        ArrayList<Double> values = new ArrayList<>();;
-        initializeLists(rates, incomes, values);
         double tax= 0.0;
         double totalIncome = 1000.0;
 
@@ -42,7 +40,8 @@ public class TaxpayerTest {
         }
 
         assertEquals(tax, taxpayer.calculateTax( totalIncome,
-                rates, values, incomes));
+                taxpayer.getFamilyStatus().getRates(), taxpayer.getFamilyStatus().getValues(),
+                taxpayer.getFamilyStatus().getIncomes()));
     }
 
     @Test
@@ -105,21 +104,22 @@ public class TaxpayerTest {
         double taxIncrease = taxpayer.getTaxInxrease();
         double taxDecrease = taxpayer.getTaxDecrease();
 
-        if ((totalReceiptsAmount/(double)income) < 0.2){
+        if ((totalReceiptsAmount/ income) < 0.2){
             taxIncrease = basicTax * 0.08;
         }
-        else if ((totalReceiptsAmount/(double)income) < 0.4){
+        else if ((totalReceiptsAmount/ income) < 0.4){
             taxIncrease = basicTax * 0.04;
         }
-        else if ((totalReceiptsAmount/(double)income) < 0.6){
+        else if ((totalReceiptsAmount/ income) < 0.6){
             taxDecrease = basicTax * 0.15;
         }
         else{
             taxDecrease = basicTax * 0.30;
         }
-
+        double tax = basicTax + taxIncrease - taxDecrease;
         taxpayer.calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
-        assertEquals((basicTax + taxIncrease - taxDecrease),
+
+        assertEquals(new BigDecimal(tax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue(),
                 taxpayer.getTotalTax());
     }
 
@@ -132,9 +132,18 @@ public class TaxpayerTest {
     }
 
     private Taxpayer taxpayer(){
+        ArrayList<Double> rates = new ArrayList<>();
+        ArrayList<Double> incomes = new ArrayList<>();
+        ArrayList<Double> values = new ArrayList<>();
+        initializeLists(rates, incomes, values);
+
+        ArrayList<ArrayList<Double>> valuesOfStatusList = new ArrayList<>();
+        valuesOfStatusList.add(rates);
+        valuesOfStatusList.add(incomes);
+        valuesOfStatusList.add(values);
 
         return new Taxpayer("Nikos Zisis", "130456094",
-                null,"10.0");
+                FamilyStatus.initializeFamilyInfo("Married filing jointly", valuesOfStatusList),"10.0");
     }
 
     private void initializeLists (ArrayList<Double> rates, ArrayList<Double> incomes, ArrayList<Double> values ){
