@@ -7,10 +7,8 @@ import inputManagePackage.InputSystem;
 import org.junit.Test;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,104 +20,67 @@ public class InputSystemTest {
     private Database database = Database.getInstance();
     private InputSystem inputSystem =null;
 
-//    @Test
-//    public void addTaxpayersDataFromFilesIntoDatabase() throws IOException {
-//
-//
-//        List<String> files = new ArrayList<>();
-//        files.add("130456093_INFO.txt");
-//        files.add("130456094_INFO.xml");
-//        inputSystem.addTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
-//        Taxpayer taxpayer1 = database.getTaxpayerFromArrayList(0);
-//        ArrayList<Receipt> receipt1 = taxpayer1.getReceiptsArrayList();
-//
-//        ArrayList<ArrayList<String>> infoOfFile = setInfoTxtFile();
-//
-//        String[] taxpayerInfo = {taxpayer1.getName(), taxpayer1.getAFM(), taxpayer1.getFamilyStatus(),
-//                 String.valueOf(taxpayer1.getIncome())};
-//
-//        ArrayList<ArrayList<String>> allReceipts = new ArrayList<>();
-//
-//
-//        for(int i =0; i<receipt1.size(); i++){
-//
-//            ArrayList<String> currentReceipt = new ArrayList<>();
-//            currentReceipt.add(receipt1.get(i).getId());
-//            currentReceipt.add(receipt1.get(i).getDate());
-//            currentReceipt.add(receipt1.get(i).getKind());
-//            currentReceipt.add(String.valueOf(receipt1.get(i).getAmount()));
-//            currentReceipt.add(receipt1.get(i).getCompany().getName());
-//            currentReceipt.add(receipt1.get(i).getCompany().getCountry());
-//            currentReceipt.add(receipt1.get(i).getCompany().getCity());
-//            currentReceipt.add(receipt1.get(i).getCompany().getStreet());
-//            currentReceipt.add(receipt1.get(i).getCompany().getNumber());
-//
-//            allReceipts.add(currentReceipt);
-//        }
-//
-//
-//        FileReader input = null;
-//        input = new FileReader("InputFiles/130456093_INFO.txt");
-//
-//        BufferedReader bufRead = new BufferedReader(input);
-//        String myLine = null;
-//        int lineCounterTaxPayer = 0;
-//        boolean flagReceipts = false;
-//
-//        while((myLine = bufRead.readLine()) != null){
-////
-//            if(myLine.isBlank() || myLine.equals("Receipts:")){
-//                flagReceipts = true;
-//              continue;
-//            }
-//
-//            if(flagReceipts){
-//
-//              for (int i =0; i< allReceipts.size(); i++){
-//
-//                  if(myLine.isBlank())  myLine = bufRead.readLine();
-//
-//                  for (int j =0; j< 9; j++) {
-//                      assertEquals(myLine.substring(infoOfFile.get(1).get(j).length(), myLine.length()),
-//                              allReceipts.get(i).get(j));
-//                      myLine = bufRead.readLine();
-//                  }
-//
-//              }
-//
-//            }
-//
-//            else {
-//                assertEquals(myLine.substring(infoOfFile.get(0).get(lineCounterTaxPayer).length(), myLine.length()),
-//                        taxpayerInfo[lineCounterTaxPayer]);
-//
-//                lineCounterTaxPayer++;
-//            }
-//
-//        }
-//
-//    }
+    @Test
+    public void addTaxpayersDataFromFilesIntoDatabase() throws IOException {
 
-    private ArrayList<ArrayList<String>> setInfoTxtFile(){
 
-        ArrayList<ArrayList<String>> infoOfFile = new ArrayList<>();
-        ArrayList<String> taxpayerInfo = new ArrayList<>();
-        ArrayList<String> receiptsInfo = new ArrayList<>();
+        List<String> files = new ArrayList<>();
+        files.add("130456093_INFO.txt");
+        files.add("130456094_INFO.xml");
+        database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
 
-        taxpayerInfo.add("Name: ");
-        taxpayerInfo.add("AFM: ");
-        taxpayerInfo.add("Status: ");
-        taxpayerInfo.add("Income: ");
+        Taxpayer taxpayerTxt = database.getTaxpayerFromArrayList(0);
+        Taxpayer taxpayerXml = database.getTaxpayerFromArrayList(1);
 
-        receiptsInfo.add("Receipt ID: ");
-        receiptsInfo.add("Date: ");
-        receiptsInfo.add("Kind: ");
-        receiptsInfo.add("Amount: ");
-        receiptsInfo.add("Company: ");
-        receiptsInfo.add("Country: ");
-        receiptsInfo.add("City: ");
-        receiptsInfo.add("Street: ");
-        receiptsInfo.add("Number: ");
+        ArrayList<Receipt> receiptTxt = taxpayerTxt.getReceiptsArrayList();
+        ArrayList<Receipt> receiptXml = taxpayerXml.getReceiptsArrayList();
+
+        String[] taxpayerInfo1 = {taxpayerTxt.getName(), taxpayerTxt.getAFM(), taxpayerTxt.getFamilyStatus(),
+                 String.valueOf(taxpayerTxt.getIncome())};
+        String[] taxpayerInfo2 = {taxpayerXml.getName(), taxpayerXml.getAFM(), taxpayerXml.getFamilyStatus(),
+                 String.valueOf(taxpayerXml.getIncome())};
+
+        ArrayList<ArrayList<String>> allReceiptsTxt = getReceipts(receiptTxt);
+        ArrayList<ArrayList<String>> allReceiptsXml = getReceipts(receiptXml);
+
+        testFiles("InputFiles/130456094_INFO.xml", allReceiptsXml, setInfoTxtFile("XML",
+                "InputInfoForTestXML"), taxpayerInfo2);
+        testFiles("InputFiles/130456093_INFO.txt", allReceiptsTxt, setInfoTxtFile("TXT",
+                "InputInfoForTestTXT"), taxpayerInfo1);
+
+    }
+
+    private ArrayList<ArrayList<String[]>> setInfoTxtFile(String typeOfFile, String fileName) throws IOException {
+
+        ArrayList<ArrayList<String[]>> infoOfFile = new ArrayList<>();
+        ArrayList<String[]> taxpayerInfo = new ArrayList<>();
+        ArrayList<String[]> receiptsInfo = new ArrayList<>();
+
+        FileReader input = null;
+        input = new FileReader("tests/"+fileName);
+
+        BufferedReader bufRead = new BufferedReader(input);
+        String myLine = null;
+        boolean flagReceipts = false;
+
+        if(typeOfFile.equals("TXT")){
+            while((myLine = bufRead.readLine())!=null){
+                if(myLine.equals("Receipts:")){flagReceipts=true; continue;}
+
+                if(flagReceipts) receiptsInfo.add(new String[]{myLine + " ", ""});
+
+                else taxpayerInfo.add(new String[]{myLine + " ", ""});
+            }
+        }
+        else{
+            while((myLine = bufRead.readLine())!=null){
+                if(myLine.equals("<Receipts>")){flagReceipts=true; continue;}
+
+                if(flagReceipts) receiptsInfo.add(myLine.split("\\s+"));
+
+                else taxpayerInfo.add(myLine.split("\\s+"));;
+            }
+        }
 
         infoOfFile.add(taxpayerInfo);
         infoOfFile.add(receiptsInfo);
@@ -127,30 +88,86 @@ public class InputSystemTest {
         return infoOfFile;
     }
 
-    private ArrayList<ArrayList<String>> setInfoXmlFile(){
+    private ArrayList<ArrayList<String>> getReceipts(ArrayList<Receipt>  receipt){
 
-        ArrayList<ArrayList<String>> infoOfFile = new ArrayList<>();
-        ArrayList<String> taxpayerInfo = new ArrayList<>();
-        ArrayList<String> receiptsInfo = new ArrayList<>();
+        ArrayList<ArrayList<String>> allReceipts = new ArrayList<>();
 
-        taxpayerInfo.add("Name: ");
-        taxpayerInfo.add("AFM: ");
-        taxpayerInfo.add("Status: ");
-        taxpayerInfo.add("Income: ");
+        for(int i =0; i<receipt.size(); i++){
 
-        receiptsInfo.add("Receipt ID: ");
-        receiptsInfo.add("Date: ");
-        receiptsInfo.add("Kind: ");
-        receiptsInfo.add("Amount: ");
-        receiptsInfo.add("Company: ");
-        receiptsInfo.add("Country: ");
-        receiptsInfo.add("City: ");
-        receiptsInfo.add("Street: ");
-        receiptsInfo.add("Number: ");
+            ArrayList<String> currentReceipt = new ArrayList<>();
+            currentReceipt.add(receipt.get(i).getId());
+            currentReceipt.add(receipt.get(i).getDate());
+            currentReceipt.add(receipt.get(i).getKind());
+            currentReceipt.add(String.valueOf(receipt.get(i).getAmount()));
+            currentReceipt.add(receipt.get(i).getCompany().getName());
+            currentReceipt.add(receipt.get(i).getCompany().getCountry());
+            currentReceipt.add(receipt.get(i).getCompany().getCity());
+            currentReceipt.add(receipt.get(i).getCompany().getStreet());
+            currentReceipt.add(receipt.get(i).getCompany().getNumber());
 
-        infoOfFile.add(taxpayerInfo);
-        infoOfFile.add(receiptsInfo);
+            allReceipts.add(currentReceipt);
+        }
 
-        return infoOfFile;
+        return allReceipts;
+    }
+
+    private void testFiles(String path, ArrayList<ArrayList<String>> allReceipts, ArrayList<ArrayList<String[]>> infoOfFile
+    ,String[] taxpayerInfo) throws IOException {
+
+        FileReader input = null;
+        input = new FileReader(path);
+
+        BufferedReader bufRead = new BufferedReader(input);
+        String myLine = null;
+        int lineCounterTaxPayer = 0;
+        boolean flagReceipts = false;
+
+        while((myLine = bufRead.readLine()) != null){
+
+            if(myLine.isBlank() || myLine.equals("Receipts:") ||myLine.equals("<Receipts>")){
+                flagReceipts = true;
+                continue;
+            }
+            if(myLine.equals("</Receipts>")) break;
+
+            if(flagReceipts){
+
+                for (int i =0; i< allReceipts.size(); i++){
+
+                    if(myLine.isBlank())  myLine = bufRead.readLine();
+
+                    for (int j =0; j< 9; j++) {
+                        if(path.endsWith(".txt")){
+                            assertEquals(myLine.substring(infoOfFile.get(1).get(j)[0].length(),
+                                    myLine.length() - infoOfFile.get(1).get(j)[1].length()),
+                                    allReceipts.get(i).get(j));
+                        }
+                        else{
+                            assertEquals(myLine.substring(infoOfFile.get(1).get(j)[0].length(),
+                                    myLine.length() - infoOfFile.get(1).get(j)[1].length()),
+                                    " " + allReceipts.get(i).get(j) + " ");
+                        }
+
+                        myLine = bufRead.readLine();
+                    }
+
+                }
+
+            }
+
+            else {
+                if(path.endsWith(".txt")) {
+                    assertEquals(myLine.substring(infoOfFile.get(0).get(lineCounterTaxPayer)[0].length(),
+                            myLine.length() - infoOfFile.get(0).get(lineCounterTaxPayer)[1].length()),
+                            taxpayerInfo[lineCounterTaxPayer]);
+                }else{
+                    assertEquals(myLine.substring(infoOfFile.get(0).get(lineCounterTaxPayer)[0].length(),
+                            myLine.length() - infoOfFile.get(0).get(lineCounterTaxPayer)[1].length()),
+                            " " + taxpayerInfo[lineCounterTaxPayer] + " ");
+                }
+                lineCounterTaxPayer++;
+            }
+
+        }
     }
 }

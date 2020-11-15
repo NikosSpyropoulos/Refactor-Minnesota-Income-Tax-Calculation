@@ -13,32 +13,6 @@ public abstract class InputSystem {
 
 	protected Database database = Database.getInstance();
 
-//	private static InputSystem firstInstance = null;
-//
-////	private InputSystem(){ }
-//
-//	public static InputSystem getInstance() {
-//		if(firstInstance == null) {
-//			firstInstance = new InputSystem();
-//		}
-//
-//		return firstInstance;
-//	}
-
-//	public void addTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles) {
-//
-//		for (String afmInfoFile : taxpayersAfmInfoFiles) {
-//
-//			if (afmInfoFile.endsWith(".txt")){
-//				InputSystemTxt.getInstance();
-//				loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
-//			}
-//			else if (afmInfoFile.endsWith(".xml")){
-//				InputSystemXml.getInstance();
-//				loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
-//			}
-//		}
-//	}
 	private static final String TAXPAYER = "taxpayer";
 	private static final String RECEIPT = "receipt";
 
@@ -49,7 +23,7 @@ public abstract class InputSystem {
 		Taxpayer newTaxpayer = initializeTaxpayer(inputStream);
 
 		String fileLine;
-		Scanner previousInputStream;
+
 		while (inputStream.hasNextLine()) {
 
 			fileLine = inputStream.nextLine();
@@ -60,24 +34,7 @@ public abstract class InputSystem {
 
 			Receipt newReceipt = initializeReceipt( inputStream, fileLine);
 			newTaxpayer.addReceiptToList(newReceipt);
-//			fileLine = inputStream.nextLine();
-//			if (fileLine.indexOf("</Receipts>")!=-1) break;
-//			receiptInfo.add(inputStream.nextLine());
-//			receiptInfo.add(inputStream.nextLine());
-//			receiptInfo.add(inputStream.nextLine());
-//			receiptInfo.add(inputStream.nextLine());
-//			receiptInfo.add(inputStream.nextLine());
-//			receiptInfo.add(inputStream.nextLine());
-//			receiptInfo.add(inputStream.nextLine());
-//			receiptInfo.add(inputStream.nextLine());
 
-//			Receipt newReceipt = loadReceiptsDataFromFileIntoDatabase(fileLine, receiptInfo);
-//			if(newReceipt == null) {
-//				continue;
-//			}
-//			else {
-//				newTaxpayer.addReceiptToList(newReceipt);
-//			}.
 		}
 		database.addTaxpayerToList(newTaxpayer);
 	}
@@ -104,11 +61,8 @@ public abstract class InputSystem {
 				infoArrayList.add(inputStream.nextLine());
 			}
 			else if(type.equals(RECEIPT)){
-				if(i == 0)
-					infoArrayList.add(fileLine);
-				else
-					infoArrayList.add(inputStream.nextLine());
-				//inputStream.();
+				infoArrayList.add(fileLine);
+				fileLine = inputStream.nextLine();
 			}
 			i++;
 		}
@@ -144,9 +98,7 @@ public abstract class InputSystem {
 		return newReceipt;
 	}
 
-	protected abstract ArrayList<String> loadDataFromFileIntoDatabase(ArrayList<String> typeInfo, String type);
-
-	protected ArrayList<ArrayList<Double>> familyStatusInfo(String familyStatus) throws IOException {
+	private ArrayList<ArrayList<Double>> familyStatusInfo(String familyStatus) throws IOException {
 
 		FileReader input = null;
 		input = new FileReader("inputManagePackage/valuesForCalcTax");
@@ -183,63 +135,11 @@ public abstract class InputSystem {
 		return valuesOfStatusList;
 	}
 
+	protected abstract ArrayList<String> loadDataFromFileIntoDatabase(ArrayList<String> typeInfo, String type);
+
 	protected String getParameterValueFromFileLine(String fileLine, String parameterStartField, String parameterEndField){
 
 		return fileLine.substring(parameterStartField.length(), fileLine.length()-parameterEndField.length());
 
 	}
-
-//	public void loadTaxpayersDataFromFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile){
-//
-//		ArrayList<String> taxpayerInfo = new ArrayList<String>();
-//
-//		Scanner inputStream = null;
-//		try
-//		{
-//			inputStream = new Scanner(new FileInputStream(afmInfoFileFolderPath+"\\"+afmInfoFile));
-//		}
-//		catch(FileNotFoundException e)
-//		{
-//			System.out.println("Problem opening " + afmInfoFile + " file.");
-//			System.exit(0);
-//		}
-//
-//		taxpayerInfo = getParameterValuesTaxPayer();
-//
-//		ArrayList<ArrayList<Double>> valuesOfStatusList = new ArrayList<>();
-//		try {
-//			valuesOfStatusList = familyStatusInfo(taxpayerInfo.get(2));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		Taxpayer newTaxpayer = new Taxpayer(taxpayerInfo.get(0), taxpayerInfo.get(1), FamilyStatus.initializeFamilyInfo(taxpayerInfo.get(2), valuesOfStatusList) , taxpayerInfo.get(3));
-//
-//
-//		String fileLine;
-//		while (inputStream.hasNextLine())
-//		{
-//
-//
-//		}
-//
-//
-//	}
-//
-//
-//	abstract void getParameterValuesTaxPayer();
-//	abstract void getParameterValuesReceipt();
-
-	//protected abstract Receipt loadReceiptsDataFromFileIntoDatabase(String fileLine, ArrayList<String> receiptInfo);
-//	protected abstract Taxpayer loadTaxpayerDataFromFileIntoDatabase(ArrayList<String> taxpayerInfo);
-//	abstract void loadTaxpayerDataFromTxtFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile);
-//
-//
-//	abstract String getParameterValueFromTxtFileLine(String fileLine, String parameterName);
-//
-//	abstract void loadTaxpayersDataFromXmlFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile);
-//
-//	abstract String getParameterValueFromXmlFileLine(String fileLine, String parameterStartField, String parameterEndField);
-
-
 }
