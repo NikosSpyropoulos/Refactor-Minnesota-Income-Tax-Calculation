@@ -19,6 +19,7 @@ import javax.swing.JSeparator;
 public class MainJFrameWindow {
 
 	private JFrame taxationMainWindowJFrame;
+	private Database database = Database.getInstance();
 
 
 	public static void main(String[] args) {
@@ -96,7 +97,7 @@ public class MainJFrameWindow {
 					String afmInfoFilesFolderPath = afmInfoFilesFolderChooser.getSelectedFile().toString();
 					JOptionPane.showMessageDialog(null, afmInfoFilesFolderPath, "Διαδρομή φακέλου αρχείων εισόδου", JOptionPane.INFORMATION_MESSAGE);
 
-					Database.setTaxpayersInfoFilesPath(afmInfoFilesFolderPath);
+					database.setTaxpayersInfoFilesPath(afmInfoFilesFolderPath);
 
 					TaxpayerLoadDataJDialog taxpayerLoadDataJDialog = new TaxpayerLoadDataJDialog(taxationMainWindowJFrame);
 					taxpayerLoadDataJDialog.fillTaxpayersAfmInfoFilesJList(afmInfoFilesFolderPath);

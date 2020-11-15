@@ -27,42 +27,34 @@ import static org.junit.Assert.assertThat;
 
 public class DatabaseTest {
 
-    private Database myDatabase = new Database();
-
-
-    @Test
-    public void proccessTaxpayersDataFromFilesIntoDatabase() {
-
-    }
+    private  Database database = Database.getInstance();
 
     @Test
     public void addTaxpayerToList() {
 
         Taxpayer taxpayer = taxpayer();
-        int size = Database.getTaxpayersArrayListSize();
-        Database.addTaxpayerToList(taxpayer);
-        assertEquals(size + 1, myDatabase.getTaxpayersArrayListSize());
+        int size = database.getTaxpayersArrayListSize();
+        database.addTaxpayerToList(taxpayer);
+        assertEquals(size + 1, database.getTaxpayersArrayListSize());
     }
 
     @Test
     public void getTaxpayerFromArrayList() {
 
         Taxpayer taxpayer = taxpayer();
-        Database.addTaxpayerToList(taxpayer);
-        assertEquals(taxpayer, Database.getTaxpayerFromArrayList(0));
+        database.addTaxpayerToList(taxpayer);
+        assertEquals(taxpayer, database.getTaxpayerFromArrayList(0));
     }
-
-
 
     @Test
     public void removeTaxpayerFromArrayList() {
 
         Taxpayer taxpayer = taxpayer();
-        Database.addTaxpayerToList(taxpayer);
-        int size = Database.getTaxpayersArrayListSize();
+        database.addTaxpayerToList(taxpayer);
+        int size = database.getTaxpayersArrayListSize();
 
-        Database.removeTaxpayerFromArrayList(0);
-        assertEquals(size - 1, Database.getTaxpayersArrayListSize());
+        database.removeTaxpayerFromArrayList(0);
+        assertEquals(size - 1, database.getTaxpayersArrayListSize());
 
     }
 
@@ -70,8 +62,8 @@ public class DatabaseTest {
     public void getTaxpayerNameAfmValuesPairList() {
         String nameAfm  = "Nikos Zisis | 130456094";
         Taxpayer taxpayer = taxpayer();
-        Database.addTaxpayerToList(taxpayer);
-        assertEquals(nameAfm, Database.getTaxpayerNameAfmValuesPairList(0));
+        database.addTaxpayerToList(taxpayer);
+        assertEquals(nameAfm, database.getTaxpayerNameAfmValuesPairList(0));
 
     }
 
@@ -79,13 +71,13 @@ public class DatabaseTest {
     public void getTaxpayersNameAfmValuesPairList() {
 
         Taxpayer taxpayer = taxpayer();
-        Database.addTaxpayerToList(taxpayer);
-        Database.addTaxpayerToList(taxpayer);
+        database.addTaxpayerToList(taxpayer);
+        database.addTaxpayerToList(taxpayer);
 
         String[] taxpayersNameAfmValuesPairList = {"Nikos Zisis | 130456094", "Nikos Zisis | 130456094"};
 
         assertArrayEquals(taxpayersNameAfmValuesPairList,
-                Database.getTaxpayersNameAfmValuesPairList());
+                database.getTaxpayersNameAfmValuesPairList());
     }
 
 //    @Test
@@ -129,7 +121,6 @@ public class DatabaseTest {
 
         return receipt;
     }
-
 
     private Taxpayer taxpayer(){
         ArrayList<Double> rates = new ArrayList<>();
