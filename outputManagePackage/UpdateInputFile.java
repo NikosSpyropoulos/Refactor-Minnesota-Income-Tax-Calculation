@@ -14,8 +14,6 @@ public class UpdateInputFile {
     private final String fileName;
     private ArrayList<ArrayList<String[]>> allInfo;
 
-//    private static UpdateInputFile firstInstance = null;
-
     public UpdateInputFile(String typeOfFile, String filename){
         this.typeOfFile = typeOfFile;
         this.fileName = filename;
@@ -25,14 +23,6 @@ public class UpdateInputFile {
             e.printStackTrace();
         }
     }
-
-//    public static UpdateInputFile getInstance(String typeOfFile, String fileName) {
-//        if(firstInstance == null) {
-//            firstInstance = new UpdateInputFile(typeOfFile, fileName);
-//        }
-//
-//        return firstInstance;
-//    }
 
     private ArrayList<ArrayList<String[]>> getInfo() throws IOException {
 

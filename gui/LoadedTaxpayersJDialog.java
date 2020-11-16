@@ -1,6 +1,8 @@
 package gui;
 import dataManagePackage.Database;
+import outputManagePackage.GeneratorLogFile;
 import outputManagePackage.OutputSystem;
+import outputManagePackage.UpdateInputFile;
 import outputManagePackage.VisualisationChart;
 
 import java.awt.Color;
@@ -194,8 +196,8 @@ public class LoadedTaxpayersJDialog extends JDialog {
 
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 						String savePath = saveFileFolderChooser.getSelectedFile().toString();
-
-						outputSystem.saveTaxpayerInfoToTxtLogFile(savePath, taxpayerIndex);
+						GeneratorLogFile generatorLogFile = new GeneratorLogFile("TXT",savePath);
+						generatorLogFile.saveTaxpayerInfoToLogFile(savePath, taxpayerIndex);
 					}
 				}
 				else{
@@ -215,8 +217,9 @@ public class LoadedTaxpayersJDialog extends JDialog {
 
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 						String savePath = saveFileFolderChooser.getSelectedFile().toString();
-
-						outputSystem.saveTaxpayerInfoToXmlLogFile(savePath, taxpayerIndex);
+						GeneratorLogFile generatorLogFile = new GeneratorLogFile("XML",savePath);
+						generatorLogFile.saveTaxpayerInfoToLogFile(savePath, taxpayerIndex);
+						//outputSystem.saveTaxpayerInfoToXmlLogFile(savePath, taxpayerIndex);
 					}
 				}
 				else{
