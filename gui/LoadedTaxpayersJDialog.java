@@ -1,6 +1,7 @@
 package gui;
 import dataManagePackage.Database;
 import outputManagePackage.OutputSystem;
+import outputManagePackage.VisualisationChart;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -25,9 +26,12 @@ public class LoadedTaxpayersJDialog extends JDialog {
 	private JFrame appMainWindow;
 
 	private Database database = Database.getInstance();
-	private OutputSystem outputSystem = OutputSystem.getInstance();
+
 
 	public LoadedTaxpayersJDialog(JFrame appMainWindow) {
+		OutputSystem outputSystem = OutputSystem.getInstance();
+		VisualisationChart visualisationChart = VisualisationChart.getInstance();
+
 		this.appMainWindow = appMainWindow;
 
 		setResizable(false);
@@ -159,7 +163,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				int taxpayerIndex = loadedTaxpayersJList.getSelectedIndex();
 				if (taxpayerIndex!=-1){
-					outputSystem.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
+					visualisationChart.createTaxpayerReceiptsPieJFreeChart(taxpayerIndex);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);
@@ -171,7 +175,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				int taxpayerIndex = loadedTaxpayersJList.getSelectedIndex();
 				if (taxpayerIndex!=-1){
-					outputSystem.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
+					visualisationChart.createTaxpayerTaxAnalysisBarJFreeChart(taxpayerIndex);
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Δεν έχεις επιλέξει κάποιον φορολογούμενο απο την λίστα.", "Σφάλμα", JOptionPane.WARNING_MESSAGE);

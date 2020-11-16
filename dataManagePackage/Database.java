@@ -83,6 +83,7 @@ public class Database {
 	
 	public void updateTaxpayerInputFile(int index){
 		OutputSystem outputSystem = OutputSystem.getInstance();
+
 		File taxpayersInfoFilesPathFileObject = new File(taxpayersInfoFilesPath);
 		FilenameFilter fileNameFilter = new FilenameFilter(){
             public boolean accept(File dir, String name) {
@@ -94,10 +95,14 @@ public class Database {
 			if (!file.getName().contains(taxpayersArrayList.get(index).getAFM())) continue;
 			
 			if (file.getName().toLowerCase().endsWith(".txt")){
-				outputSystem.saveUpdatedTaxpayerTxtInputFile(file.getAbsolutePath(), index);
+				UpdateInputFile updateInputFile = new UpdateInputFile("TXT",file.getName());
+//				outputSystem.saveUpdatedTaxpayerTxtInputFile(file.getAbsolutePath(), index);
+				updateInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			if (file.getName().toLowerCase().endsWith(".xml")){
-				outputSystem.saveUpdatedTaxpayerXmlInputFile(file.getAbsolutePath(), index);
+//				outputSystem.saveUpdatedTaxpayerXmlInputFile(file.getAbsolutePath(), index);
+				UpdateInputFile updateInputFile = new UpdateInputFile("XML",file.getName());
+				updateInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			break;
 		}
