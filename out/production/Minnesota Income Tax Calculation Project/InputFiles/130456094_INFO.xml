@@ -5,6 +5,16 @@
 
 <Receipts>
 
+<ReceiptID> 25 </ReceiptID>
+<Date> 12/12/20 </Date>
+<Kind> Health </Kind>
+<Amount> 52136.0 </Amount>
+<Company> Comp </Company>
+<Country> Country </Country>
+<City> City </City>
+<Street> Street </Street>
+<Number> 10 </Number>
+
 <ReceiptID> 1 </ReceiptID>
 <Date> 25/2/2014 </Date>
 <Kind> Other </Kind>

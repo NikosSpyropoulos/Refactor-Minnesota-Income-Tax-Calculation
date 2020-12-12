@@ -22,18 +22,18 @@ public class GeneratorLogFileTest {
     private final String INPUT_FILE_XML = "XML";
     private final String OUTPUT_FILE_TXT = "TXT";
     private final String OUTPUT_FILE_XML = "XML";
+    private final int TAXPAYER_TXT = 0;
+    private final int TAXPAYER_XML = 1;
 
     @Test
     public void saveTaxpayerInfoToLogFile() throws IOException {
 
         initializeTaxPayers();
-        Taxpayer taxpayerTxt = database.getTaxpayerFromArrayList(0);
-        Taxpayer taxpayerXml = database.getTaxpayerFromArrayList(1);
 
-        CheckInfoEquality(taxpayerTxt, INPUT_FILE_TXT, OUTPUT_FILE_TXT);
-        CheckInfoEquality(taxpayerTxt, INPUT_FILE_TXT, OUTPUT_FILE_XML);
-        CheckInfoEquality(taxpayerXml, INPUT_FILE_XML, OUTPUT_FILE_TXT);
-        CheckInfoEquality(taxpayerXml, INPUT_FILE_XML, OUTPUT_FILE_XML);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_TXT), INPUT_FILE_TXT, OUTPUT_FILE_TXT);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_TXT), INPUT_FILE_TXT, OUTPUT_FILE_XML);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_XML), INPUT_FILE_XML, OUTPUT_FILE_TXT);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_XML), INPUT_FILE_XML, OUTPUT_FILE_XML);
 
     }
 
@@ -44,29 +44,29 @@ public class GeneratorLogFileTest {
         database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
     }
 
-    private void CheckInfoEquality(Taxpayer taxpayerTxt, String typeOfFile, String typeOfLOGFile) throws IOException {
+    private void CheckInfoEquality(Taxpayer taxpayer, String typeOfInputFile, String typeOfLOGFile) throws IOException {
 
         GeneratorLogFile generatorLogFile = new GeneratorLogFile(typeOfLOGFile);
 
-        BufferedReader bufRead = new BufferedReader(getFileReader(typeOfFile, typeOfLOGFile, generatorLogFile));
+        BufferedReader bufRead = new BufferedReader(getFileReader(typeOfInputFile, typeOfLOGFile, generatorLogFile));
         String myLine = null;
 
          int lineOfFileItem=0;
 
          while((myLine = bufRead.readLine())!=null){
-             assertEquals(myLine,getLinesOfFile(taxpayerTxt, generatorLogFile.getTaxPayerInfo(taxpayerTxt),
+             assertEquals(myLine,getLinesOfFile(taxpayer, generatorLogFile.getTaxPayerInfo(taxpayer),
                      generatorLogFile.getInfoFromTemplateFile()).get(lineOfFileItem));
              lineOfFileItem++;
          }
     }
 
-    private ArrayList<String> getLinesOfFile(Taxpayer taxpayerTxt, String[] taxpayerInfo, ArrayList<String[]> infoFromTemplateFile) {
+    private ArrayList<String> getLinesOfFile(Taxpayer taxpayer, String[] taxpayerInfo, ArrayList<String[]> infoFromTemplateFile) {
         ArrayList<String> linesOfFile = new ArrayList<>();
 
         for(int i = 0; i < taxpayerInfo.length; i++) {
 
             if ( i == CHECK_IF_INCREASE){
-                if (taxpayerTxt.getTaxInxrease() == 0) {
+                if (taxpayer.getTaxInxrease() == 0) {
                     i++;    //overpass "Tax Increase: " go to "Tax Decrease: "
                     linesOfFile.add(infoFromTemplateFile.get(i)[0].concat(taxpayerInfo[i].concat(infoFromTemplateFile.get(i)[1])));
                 } else {
@@ -83,18 +83,24 @@ public class GeneratorLogFileTest {
     private FileReader getFileReader(String typeOfFile, String typeOfLOGFile, GeneratorLogFile generatorLogFile) throws FileNotFoundException {
         FileReader input = null;
         if(typeOfFile.equals("TXT")) {
-            generatorLogFile.saveTaxpayerInfoToLogFile("tests", 0);
-            if (typeOfLOGFile.equals("TXT"))
-                input = new FileReader("tests/130456093_LOG.txt");
-            else
-                input = new FileReader("tests/130456093_LOG.xml");
+
+            input = readFromFile(typeOfLOGFile, generatorLogFile, TAXPAYER_TXT);
+
         }else{
-            generatorLogFile.saveTaxpayerInfoToLogFile("tests", 1);
-            if (typeOfLOGFile.equals("TXT"))
-                input = new FileReader("tests/130456094_LOG.txt");
-            else
-                input = new FileReader("tests/130456094_LOG.xml");
+            input = readFromFile(typeOfLOGFile, generatorLogFile, TAXPAYER_XML);
         }
+        return input;
+    }
+
+    private FileReader readFromFile(String typeOfLOGFile, GeneratorLogFile generatorLogFile, int index) throws FileNotFoundException {
+
+        FileReader input;
+        generatorLogFile.saveTaxpayerInfoToLogFile("tests", index);
+
+        if (typeOfLOGFile.equals("TXT"))
+            input = new FileReader("tests/" + database.getTaxpayerFromArrayList(index).getAFM() + "_LOG.txt");
+        else
+            input = new FileReader("tests/" + database.getTaxpayerFromArrayList(index).getAFM() + "_LOG.xml");
         return input;
     }
 }

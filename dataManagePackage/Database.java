@@ -95,13 +95,13 @@ public class Database {
 			if (!file.getName().contains(taxpayersArrayList.get(index).getAFM())) continue;
 			
 			if (file.getName().toLowerCase().endsWith(".txt")){
-				UpdateInputFile updateInputFile = new UpdateInputFile("TXT",file.getName());
+				UpdateInputFile updateInputFile = new UpdateInputFile("TXT");
 //				outputSystem.saveUpdatedTaxpayerTxtInputFile(file.getAbsolutePath(), index);
 				updateInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			if (file.getName().toLowerCase().endsWith(".xml")){
 //				outputSystem.saveUpdatedTaxpayerXmlInputFile(file.getAbsolutePath(), index);
-				UpdateInputFile updateInputFile = new UpdateInputFile("XML",file.getName());
+				UpdateInputFile updateInputFile = new UpdateInputFile("XML");
 				updateInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			break;
