@@ -24,3 +24,13 @@ Country: s
 City: s
 Street: s
 Number: 5
+
+Receipt ID: 85
+Date: 11/12/1996
+Kind: Travel
+Amount: 3025.0
+Company: NComp
+Country: Greece
+City: Athens
+Street: Ath
+Number: 2

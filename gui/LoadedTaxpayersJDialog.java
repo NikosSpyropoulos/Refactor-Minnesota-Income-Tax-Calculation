@@ -196,7 +196,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 						String savePath = saveFileFolderChooser.getSelectedFile().toString();
-						GeneratorLogFile generatorLogFile = new GeneratorLogFile("TXT",savePath);
+						GeneratorLogFile generatorLogFile = new GeneratorLogFile("TXT");
 						generatorLogFile.saveTaxpayerInfoToLogFile(savePath, taxpayerIndex);
 					}
 				}
@@ -217,7 +217,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 
 					if(saveFileFolderChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 						String savePath = saveFileFolderChooser.getSelectedFile().toString();
-						GeneratorLogFile generatorLogFile = new GeneratorLogFile("XML",savePath);
+						GeneratorLogFile generatorLogFile = new GeneratorLogFile("XML");
 						generatorLogFile.saveTaxpayerInfoToLogFile(savePath, taxpayerIndex);
 						//outputSystem.saveTaxpayerInfoToXmlLogFile(savePath, taxpayerIndex);
 					}
