@@ -17,7 +17,11 @@ import static junit.framework.TestCase.assertEquals;
 
 public class InputSystemTest {
 
-    private Database database = Database.getInstance();
+    private final String INPUT_FILE_TYPE_TXT = "TXT";
+    private final String INPUT_FILE_TYPE_XML = "XML";
+    private final int TAXPAYER_INDEX_TXT = 0;
+    private final int TAXPAYER_INDEX_XML = 1;
+    private  Database database = Database.getInstance();
     private InputSystem inputSystem =null;
 
     @Test
@@ -27,6 +31,7 @@ public class InputSystemTest {
         List<String> files = new ArrayList<>();
         files.add("130456093_INFO.txt");
         files.add("130456094_INFO.xml");
+
         database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
 
         Taxpayer taxpayerTxt = database.getTaxpayerFromArrayList(0);
@@ -48,6 +53,20 @@ public class InputSystemTest {
         testFiles("InputFiles/130456093_INFO.txt", allReceiptsTxt, setInfoTxtFile("TXT",
                 "InputInfoForTestTXT"), taxpayerInfo1);
 
+    }
+
+    private Taxpayer taxpayer(){
+
+        initializeTaxPayers();
+        return database.getTaxpayerFromArrayList(TAXPAYER_INDEX_TXT);
+
+    }
+
+    private void initializeTaxPayers() {
+        List<String> files = new ArrayList<>();
+        files.add("130456093_INFO.txt");
+        files.add("130456094_INFO.xml");
+        database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
     }
 
     private ArrayList<ArrayList<String[]>> setInfoTxtFile(String typeOfFile, String fileName) throws IOException {

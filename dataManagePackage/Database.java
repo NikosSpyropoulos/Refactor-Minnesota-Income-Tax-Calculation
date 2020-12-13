@@ -36,6 +36,7 @@ public class Database {
 	}
 	
 	public void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
+
 		for (String afmInfoFile : taxpayersAfmInfoFiles) {
 
 			if (afmInfoFile.endsWith(".txt")){

@@ -1,14 +1,6 @@
 package inputManagePackage;
 
-import dataManagePackage.FamilyStatus;
-import dataManagePackage.Receipt.Receipt;
-import dataManagePackage.Taxpayer;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class InputSystemTxt extends InputSystem{
 
@@ -24,7 +16,7 @@ public class InputSystemTxt extends InputSystem{
         return firstInstance;
     }
 
-    public ArrayList<String> loadDataFromFileIntoDatabase(ArrayList<String> typeInfo, String type) {
+    public ArrayList<String> getDataFromFile(ArrayList<String> typeInfo, String type) {
 
         ArrayList<String> allInfo = new ArrayList<>();
 
