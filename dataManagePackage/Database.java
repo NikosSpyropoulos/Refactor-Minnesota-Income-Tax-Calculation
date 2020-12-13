@@ -14,10 +14,7 @@ public class Database {
 
 	private static Database firstInstance = null;
 
-
-	private Database(){
-
-	}
+	private Database(){ }
 
 	public static Database getInstance() {
 		if(firstInstance == null) {
@@ -83,7 +80,6 @@ public class Database {
 	}
 	
 	public void updateTaxpayerInputFile(int index){
-		OutputSystem outputSystem = OutputSystem.getInstance();
 
 		File taxpayersInfoFilesPathFileObject = new File(taxpayersInfoFilesPath);
 		FilenameFilter fileNameFilter = new FilenameFilter(){
@@ -97,15 +93,14 @@ public class Database {
 			
 			if (file.getName().toLowerCase().endsWith(".txt")){
 				UpdateInputFile updateInputFile = new UpdateInputFile("TXT");
-//				outputSystem.saveUpdatedTaxpayerTxtInputFile(file.getAbsolutePath(), index);
 				updateInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			if (file.getName().toLowerCase().endsWith(".xml")){
-//				outputSystem.saveUpdatedTaxpayerXmlInputFile(file.getAbsolutePath(), index);
 				UpdateInputFile updateInputFile = new UpdateInputFile("XML");
 				updateInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			break;
 		}
-	}	
+	}
+
 }

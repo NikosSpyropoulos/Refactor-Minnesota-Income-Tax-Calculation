@@ -41,9 +41,12 @@ public class TaxpayerTest {
             tax = 18197.69 + ((9.85/100) * (totalIncome-254240));
         }
 
-        assertEquals(tax, taxpayer.calculateTax( totalIncome,
-                taxpayer.getFamilyStatusObject().getRates(), taxpayer.getFamilyStatusObject().getValues(),
-                taxpayer.getFamilyStatusObject().getIncomes()));
+        ArrayList<ArrayList<Double>> taxpayerAmounts = new ArrayList<>();
+        taxpayerAmounts.add(taxpayer.getFamilyStatusObject().getRates());
+        taxpayerAmounts.add(taxpayer.getFamilyStatusObject().getValues());
+        taxpayerAmounts.add(taxpayer.getFamilyStatusObject().getIncomes());
+
+        assertEquals(tax, taxpayer.calculateTax(totalIncome,taxpayerAmounts));
     }
 
     @Test

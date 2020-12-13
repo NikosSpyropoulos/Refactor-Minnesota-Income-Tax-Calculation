@@ -14,6 +14,10 @@ public class Taxpayer {
 	private double taxDecrease;
 	private double totalTax;
 	private ArrayList<Receipt> receipts;
+	private final int RATES = 0;
+	private final int VALUES = 1;
+	private final int INCOMES = 2;
+
 
 	public FamilyStatus getFamilyStatusObject(){
 		return familyStatus;
@@ -34,44 +38,50 @@ public class Taxpayer {
 	}
 
 	public Taxpayer(String name, String afm, FamilyStatus familyStatus, String income){
+
 		this.name = name;
 		this.afm = afm;
 		this.familyStatus = familyStatus;
 		this.income = Double.parseDouble(income);
 		setBasicTaxBasedOnFamilyStatus();
-
 		taxIncrease = 0;
 		taxDecrease = 0;
-		
 		receipts = new ArrayList<Receipt>();
 
 	}
 
-
 	private void setBasicTaxBasedOnFamilyStatus(){
 
-		basicTax = calculateTax(income, getFamilyStatusObject().getRates(), getFamilyStatusObject().getValues(), getFamilyStatusObject().getIncomes() );
-
+		ArrayList<ArrayList<Double>> taxpayerAmounts = new ArrayList<>();
+		taxpayerAmounts.add(getFamilyStatusObject().getRates());
+		taxpayerAmounts.add(getFamilyStatusObject().getValues());
+		taxpayerAmounts.add(getFamilyStatusObject().getIncomes());
+		basicTax = calculateTax(income, taxpayerAmounts);
 		totalTax = basicTax;
 	}
-	public double calculateTax(double totalIncome,ArrayList<Double> rates, ArrayList<Double> values, ArrayList<Double> incomes){
+
+	public double calculateTax(double totalIncome,ArrayList<ArrayList<Double>> taxpayerAmounts){
 
 		double tax = 0;
 
-		if (totalIncome < incomes.get(0)){
-			tax = values.get(0) + (rates.get(0) /100) * totalIncome;
+		if (totalIncome < taxpayerAmounts.get(INCOMES).get(0)){
+			tax = taxpayerAmounts.get(VALUES).get(0) + (taxpayerAmounts.get(RATES).get(0) /100) * totalIncome;
 		}
-		else if (totalIncome < incomes.get(1)){
-			tax = values.get(1) + (rates.get(1) /100 * (totalIncome- incomes.get(0)));
+		else if (totalIncome < taxpayerAmounts.get(INCOMES).get(1)){
+			tax = taxpayerAmounts.get(VALUES).get(1) + (taxpayerAmounts.get(RATES).get(1) /100 *
+					(totalIncome- taxpayerAmounts.get(INCOMES).get(0)));
 		}
-		else if (totalIncome < incomes.get(2)){
-			tax = values.get(2) + (rates.get(2) /100 * (totalIncome- incomes.get(1)));
+		else if (totalIncome < taxpayerAmounts.get(INCOMES).get(2)){
+			tax = taxpayerAmounts.get(VALUES).get(2) + (taxpayerAmounts.get(RATES).get(2) /100 *
+					(totalIncome- taxpayerAmounts.get(INCOMES).get(1)));
 		}
-		else if (totalIncome < incomes.get(3)){
-			tax = values.get(3) + (rates.get(3) /100 * (totalIncome- incomes.get(2)));
+		else if (totalIncome < taxpayerAmounts.get(INCOMES).get(3)){
+			tax = taxpayerAmounts.get(VALUES).get(3) + (taxpayerAmounts.get(RATES).get(3) /100 *
+					(totalIncome- taxpayerAmounts.get(INCOMES).get(2)));
 		}
 		else{
-			tax = values.get(4) + (rates.get(4) /100 * (totalIncome- incomes.get(3)));
+			tax = taxpayerAmounts.get(VALUES).get(4) + (taxpayerAmounts.get(RATES).get(4) /100 *
+					(totalIncome- taxpayerAmounts.get(INCOMES).get(3)));
 		}
 
 		return tax;
@@ -171,6 +181,7 @@ public class Taxpayer {
 	}
 	
 	public void calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts(){
+
 		double totalReceiptsAmount = 0;
 		for (Receipt receipt : receipts){
 			totalReceiptsAmount += receipt.getAmount();
