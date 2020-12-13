@@ -1,19 +1,20 @@
 package inputManagePackage;
-
 import dataManagePackage.Database;
 import dataManagePackage.FamilyStatus;
 import dataManagePackage.Receipt.Receipt;
 import dataManagePackage.Taxpayer;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public abstract class InputSystem {
+public class InputSystem {
 
-	protected Database database = Database.getInstance();
+	private Database database = Database.getInstance();
 	private static final String TAXPAYER = "taxpayer";
 	private static final String RECEIPT = "receipt";
 	private static final int END_OF_TAXPAYER_INFO = 4;
+	private static final int END_OF_RECEIPT_INFO = 9;
 	private static final int KIND = 2;
 	private static final int ID = 0;
 	private static final int DATE = 1;
@@ -27,27 +28,45 @@ public abstract class InputSystem {
 	private static final int AFM = 1;
 	private static final int STATUS = 2;
 	private static final int INCOME = 3;
+	private ArrayList<ArrayList<String[]>> tags;
 
+	private static InputSystem firstInstance = null;
 
-	public void loadTaxpayerDataFromFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile) {
+	private InputSystem(){ }
+
+	public static InputSystem getInstance() {
+		if(firstInstance == null) {
+			firstInstance = new InputSystem();
+		}
+		return firstInstance;
+	}
+
+	public void addTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles) throws IOException {
+		for (String afmInfoFile : taxpayersAfmInfoFiles)
+		{
+			ParsingTags parsingTags = new ParsingTags();
+			if (afmInfoFile.endsWith(".txt")){
+				tags = parsingTags.getTags("InputInfoForTestTXT");
+			}
+			else if (afmInfoFile.endsWith(".xml")){
+				tags = parsingTags.getTags("InputInfoForTestXML");
+			}
+			loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
+		}
+	}
+
+	public void loadTaxpayerDataFromFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile) throws IOException {
 
 		Scanner inputStream = openFile(afmInfoFileFolderPath, afmInfoFile);
-
 		Taxpayer newTaxpayer = initializeTaxpayer(inputStream);
-
 		String fileLine;
 
 		while (inputStream.hasNextLine()) {
-
 			fileLine = inputStream.nextLine();
-
 			if(fileLine.isBlank() || fileLine.equals("Receipts:") || fileLine.equals("<Receipts>"))	continue;
-
 			if(fileLine.equals("</Receipts>")) break;
-
 			Receipt newReceipt = initializeReceipt( inputStream, fileLine);
 			newTaxpayer.addReceiptToList(newReceipt);
-
 		}
 		database.addTaxpayerToList(newTaxpayer);
 	}
@@ -67,26 +86,31 @@ public abstract class InputSystem {
 		return inputStream;
 	}
 
-	private Taxpayer initializeTaxpayer(Scanner inputStream) {
+	private Taxpayer initializeTaxpayer(Scanner inputStream) throws IOException {
 
-		ArrayList<String> fileLines = parseInfo(inputStream, END_OF_TAXPAYER_INFO, TAXPAYER, null);
+		ArrayList<String> fileLines = getLinesFromFile(inputStream, END_OF_TAXPAYER_INFO, TAXPAYER, null);
 		ArrayList<String> newTaxpayerInfo = getDataFromFile(fileLines, TAXPAYER);
-
 		ArrayList<ArrayList<Double>> valuesOfStatusList = new ArrayList<>();
 
-		try {
-			valuesOfStatusList = getValuesOfStatus(newTaxpayerInfo.get(STATUS));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		valuesOfStatusList = getValuesOfStatus(newTaxpayerInfo.get(STATUS));
 		Taxpayer newTaxpayer = new Taxpayer(newTaxpayerInfo.get(TAXPAYER_NAME), newTaxpayerInfo.get(AFM),
 				FamilyStatus.initializeFamilyInfo(newTaxpayerInfo.get(STATUS), valuesOfStatusList) , newTaxpayerInfo.get(INCOME));
 		return newTaxpayer;
 
 	}
 
-	private ArrayList<String> parseInfo(Scanner inputStream, int numOfInfo, String type, String fileLine) {
+	private Receipt initializeReceipt(Scanner inputStream, String fileLine) {
+
+		ArrayList<String> fileLines = getLinesFromFile(inputStream, END_OF_RECEIPT_INFO, RECEIPT, fileLine);
+		ArrayList<String> newReceiptInfo = getDataFromFile(fileLines,RECEIPT);
+		Receipt newReceipt = new Receipt(newReceiptInfo.get(KIND), newReceiptInfo.get(ID), newReceiptInfo.get(DATE) ,
+				newReceiptInfo.get(AMOUNT), newReceiptInfo.get(RECEIPT_NAME),newReceiptInfo.get(COUNTRY) ,
+				newReceiptInfo.get(CITY), newReceiptInfo.get(STREET), newReceiptInfo.get(NUMBER));
+		return newReceipt;
+
+	}
+
+	private ArrayList<String> getLinesFromFile(Scanner inputStream, int numOfInfo, String type, String fileLine) {
 
 		ArrayList<String> infoArrayList = new ArrayList<String>();
 		int i = 0;
@@ -105,21 +129,23 @@ public abstract class InputSystem {
 		return infoArrayList;
 	}
 
-	private Receipt initializeReceipt(Scanner inputStream, String fileLine) {
+	private ArrayList<String> getDataFromFile(ArrayList<String> fileLines, String type){
 
-		ArrayList<String> fileLines = parseInfo(inputStream, 9, RECEIPT, fileLine);
-		ArrayList<String> newReceiptInfo = getDataFromFile(fileLines,RECEIPT);
-
-		Receipt newReceipt = new Receipt(newReceiptInfo.get(KIND), newReceiptInfo.get(ID), newReceiptInfo.get(DATE) ,
-				newReceiptInfo.get(AMOUNT), newReceiptInfo.get(RECEIPT_NAME),newReceiptInfo.get(COUNTRY) ,
-				newReceiptInfo.get(CITY), newReceiptInfo.get(STREET), newReceiptInfo.get(NUMBER));
-
-		return newReceipt;
+		ArrayList<String> allInfo = new ArrayList<>();
+		if(type.equals("taxpayer")){
+			for(int i = 0; i < fileLines.size(); i++){
+				allInfo.add(getParameterValueFromFileLine(fileLines.get(i), tags.get(0).get(i)[0], tags.get(0).get(i)[1]));
+			}
+		}
+		else if(type.equals("receipt")){
+			for(int i = 0; i < fileLines.size(); i++){
+				allInfo.add(getParameterValueFromFileLine(fileLines.get(i), tags.get(1).get(i)[0], tags.get(1).get(i)[1]));
+			}
+		}
+		return allInfo;
 	}
 
-	protected abstract ArrayList<String> getDataFromFile(ArrayList<String> typeInfo, String type);
-
-	protected ArrayList<ArrayList<Double>> getValuesOfStatus(String familyStatus) throws IOException {
+	private ArrayList<ArrayList<Double>> getValuesOfStatus(String familyStatus) throws IOException {
 
 		FileReader input = null;
 		input = new FileReader("inputManagePackage/valuesForCalcTax");
@@ -155,12 +181,7 @@ public abstract class InputSystem {
 		return valuesOfStatusList;
 	}
 
-	protected String getParameterValueFromFileLine(String fileLine, String parameterStartField, String parameterEndField){
-
+	private String getParameterValueFromFileLine(String fileLine, String parameterStartField, String parameterEndField){
 		return fileLine.substring(parameterStartField.length(), fileLine.length()-parameterEndField.length());
-
 	}
-
-
-
 }

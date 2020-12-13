@@ -5,24 +5,24 @@
 
 <Receipts>
 
-<ReceiptID> 2 </ReceiptID>
-<Date> 10/5/2014 </Date>
-<Kind> Entertainment </Kind>
+<ReceiptID> 1 </ReceiptID>
+<Date> 25/2/2014 </Date>
+<Kind> Other </Kind>
 <Amount> 2000.0 </Amount>
-<Company> Hotel Du Lac </Company>
+<Company> Omega Watches </Company>
 <Country> Greece </Country>
 <City> Ioannina </City>
-<Street> Lake </Street>
-<Number> 89 </Number>
+<Street> Kaloudi </Street>
+<Number> 4 </Number>
 
-<ReceiptID> 3 </ReceiptID>
-<Date> 5/6/2014 </Date>
-<Kind> Basic </Kind>
-<Amount> 4000.0 </Amount>
-<Company> IKEA </Company>
-<Country> Greece </Country>
-<City> Ioannina </City>
-<Street> Averof </Street>
-<Number> 100 </Number>
+<ReceiptID> 0 </ReceiptID>
+<Date> 1/05/20 </Date>
+<Kind> Entertainment </Kind>
+<Amount> 512563.0 </Amount>
+<Company> OKK </Company>
+<Country> AOKO </Country>
+<City> AOK </City>
+<Street> MOA </Street>
+<Number> 5 </Number>
 
 </Receipts>

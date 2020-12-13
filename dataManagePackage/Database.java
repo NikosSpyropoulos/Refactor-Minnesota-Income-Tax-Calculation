@@ -5,6 +5,7 @@ import outputManagePackage.*;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,6 @@ public class Database {
 		if(firstInstance == null) {
 			firstInstance = new Database();
 		}
-
 		return firstInstance;
 	}
 
@@ -32,19 +32,25 @@ public class Database {
 		return this.taxpayersInfoFilesPath;
 	}
 	
-	public void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
+	public void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles) {
 
-		for (String afmInfoFile : taxpayersAfmInfoFiles) {
-
-			if (afmInfoFile.endsWith(".txt")){
-				InputSystemTxt inputSystemTxt = InputSystemTxt.getInstance();
-				inputSystemTxt.loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
-			}
-			else if (afmInfoFile.endsWith(".xml")){
-				InputSystemXml inputSystemXml =InputSystemXml.getInstance();
-				inputSystemXml.loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
-			}
+		InputSystem inputSystem = InputSystem.getInstance();
+		try {
+			inputSystem.addTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, taxpayersAfmInfoFiles);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		//		for (String afmInfoFile : taxpayersAfmInfoFiles) {
+//
+//			if (afmInfoFile.endsWith(".txt")){
+//				InputSystemTxt inputSystemTxt = InputSystemTxt.getInstance();
+//				inputSystemTxt.loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
+//			}
+//			else if (afmInfoFile.endsWith(".xml")){
+//				InputSystemXml inputSystemXml =InputSystemXml.getInstance();
+//				inputSystemXml.loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
+//			}
+//		}
 	}
 	
 	public void addTaxpayerToList(Taxpayer taxpayer){

@@ -41,9 +41,9 @@ public class InputSystemTest {
         ArrayList<Receipt> receiptXml = taxpayerXml.getReceiptsArrayList();
 
         String[] taxpayerInfo1 = {taxpayerTxt.getName(), taxpayerTxt.getAFM(), taxpayerTxt.getFamilyStatus(),
-                 String.valueOf(taxpayerTxt.getIncome())};
+                String.valueOf(taxpayerTxt.getIncome())};
         String[] taxpayerInfo2 = {taxpayerXml.getName(), taxpayerXml.getAFM(), taxpayerXml.getFamilyStatus(),
-                 String.valueOf(taxpayerXml.getIncome())};
+                String.valueOf(taxpayerXml.getIncome())};
 
         ArrayList<ArrayList<String>> allReceiptsTxt = getReceipts(receiptTxt);
         ArrayList<ArrayList<String>> allReceiptsXml = getReceipts(receiptXml);
@@ -131,7 +131,7 @@ public class InputSystemTest {
     }
 
     private void testFiles(String path, ArrayList<ArrayList<String>> allReceipts, ArrayList<ArrayList<String[]>> infoOfFile
-    ,String[] taxpayerInfo) throws IOException {
+            ,String[] taxpayerInfo) throws IOException {
 
         FileReader input = null;
         input = new FileReader(path);
