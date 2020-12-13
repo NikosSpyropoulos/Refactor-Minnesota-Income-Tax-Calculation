@@ -5,14 +5,24 @@ Income: 22570.0
 
 Receipts:
 
+Receipt ID: 2
+Date: 28/2/2014
+Kind: Entertainment
+Amount: 500.0
+Company: Floca Cafe
+Country: Greece
+City: Ioannina
+Street: Kavafi
+Number: 4
+
 Receipt ID: 12
 Date: 8/8/08
 Kind: Travel
 Amount: 200.0
-Company: s
-Country: s
-City: s
-Street: s
+Company: Spa
+Country: Spanish
+City: Alicante
+Street: Murillo
 Number: 5
 
 Receipt ID: 85

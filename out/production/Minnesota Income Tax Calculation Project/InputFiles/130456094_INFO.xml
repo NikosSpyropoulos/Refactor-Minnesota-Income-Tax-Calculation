@@ -5,16 +5,6 @@
 
 <Receipts>
 
-<ReceiptID> 25 </ReceiptID>
-<Date> 12/12/20 </Date>
-<Kind> Health </Kind>
-<Amount> 52136.0 </Amount>
-<Company> Comp </Company>
-<Country> Country </Country>
-<City> City </City>
-<Street> Street </Street>
-<Number> 10 </Number>
-
 <ReceiptID> 1 </ReceiptID>
 <Date> 25/2/2014 </Date>
 <Kind> Other </Kind>
@@ -24,5 +14,25 @@
 <City> Ioannina </City>
 <Street> Kaloudi </Street>
 <Number> 4 </Number>
+
+<ReceiptID> 2 </ReceiptID>
+<Date> 25/10/2019 </Date>
+<Kind> Basic </Kind>
+<Amount> 2456.0 </Amount>
+<Company> Omehes </Company>
+<Country> Greece </Country>
+<City> Ioannina </City>
+<Street> Stavridi </Street>
+<Number> 44 </Number>
+
+<ReceiptID> 3 </ReceiptID>
+<Date> 1/8/2015 </Date>
+<Kind> Other </Kind>
+<Amount> 2653.0 </Amount>
+<Company> Cat </Company>
+<Country> Italy </Country>
+<City> Florence </City>
+<Street> Stavri </Street>
+<Number> 18 </Number>
 
 </Receipts>

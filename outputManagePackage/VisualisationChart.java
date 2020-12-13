@@ -20,6 +20,16 @@ public class VisualisationChart {
     private Database database = Database.getInstance();
     private ChartFrame receiptPieChartFrame;
     private DefaultPieDataset receiptPieChartDataset;
+
+    public DefaultPieDataset getReceiptPieChartDataset() {
+        return receiptPieChartDataset;
+    }
+
+    public DefaultCategoryDataset getTaxAnalysisBarChartDataset() {
+        return taxAnalysisBarChartDataset;
+    }
+
+    private DefaultCategoryDataset taxAnalysisBarChartDataset;
     private JFreeChart receiptPieJFreeChart;
     private PiePlot piePlot;
 
@@ -58,7 +68,8 @@ public class VisualisationChart {
     }
 
     public void createTaxpayerTaxAnalysisBarJFreeChart(int taxpayerIndex){
-        DefaultCategoryDataset taxAnalysisBarChartDataset = new DefaultCategoryDataset();
+
+        taxAnalysisBarChartDataset = new DefaultCategoryDataset();
         Taxpayer taxpayer = database.getTaxpayerFromArrayList(taxpayerIndex);
 
         String taxVariationType = taxpayer.getTaxInxrease()!=0? "Tax Increase" : "Tax Decrease";
