@@ -12,7 +12,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import static constants.ApplicationConstants.*;
 import static junit.framework.TestCase.assertEquals;
 
 
@@ -20,19 +20,14 @@ import static junit.framework.TestCase.assertEquals;
 public class UpdateInputFileTest {
 
     private Database database = Database.getInstance();
-    private final String INPUT_FILE_TXT = "TXT";
-    private final String INPUT_FILE_XML = "XML";
-
-    private final int TAXPAYER_TXT = 0;
-    private final int TAXPAYER_XML = 1;
 
     @Test
     public void saveUpdatedTaxpayerInputFile() throws IOException {
 
         initializeTaxPayers();
 
-        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_TXT), INPUT_FILE_TXT, TAXPAYER_TXT);
-        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_XML), INPUT_FILE_XML, TAXPAYER_XML);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_INDEX_TXT), INPUT_FILE_TYPE_TXT, TAXPAYER_INDEX_TXT);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_INDEX_XML), INPUT_FILE_TYPE_XML, TAXPAYER_INDEX_XML);
     }
 
     private void initializeTaxPayers() {

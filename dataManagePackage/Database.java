@@ -1,7 +1,7 @@
 package dataManagePackage;
-import dataManagePackage.Receipt.*;
-import inputManagePackage.*;
-import outputManagePackage.*;
+
+import inputManagePackage.InputSystem;
+import outputManagePackage.UpdateInputFile;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -33,24 +33,12 @@ public class Database {
 	}
 	
 	public void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles) {
-
 		InputSystem inputSystem = InputSystem.getInstance();
 		try {
 			inputSystem.addTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, taxpayersAfmInfoFiles);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//		for (String afmInfoFile : taxpayersAfmInfoFiles) {
-//
-//			if (afmInfoFile.endsWith(".txt")){
-//				InputSystemTxt inputSystemTxt = InputSystemTxt.getInstance();
-//				inputSystemTxt.loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
-//			}
-//			else if (afmInfoFile.endsWith(".xml")){
-//				InputSystemXml inputSystemXml =InputSystemXml.getInstance();
-//				inputSystemXml.loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
-//			}
-//		}
 	}
 	
 	public void addTaxpayerToList(Taxpayer taxpayer){

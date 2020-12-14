@@ -51,13 +51,13 @@ public class GeneratorLogFileTest {
         BufferedReader bufRead = new BufferedReader(getFileReader(typeOfInputFile, typeOfLOGFile, generatorLogFile));
         String myLine = null;
 
-         int lineOfFileItem=0;
+        int lineOfFileItem=0;
 
-         while((myLine = bufRead.readLine())!=null){
-             assertEquals(myLine,getLinesOfFile(taxpayer, generatorLogFile.getTaxPayerInfo(taxpayer),
-                     generatorLogFile.getInfoFromTemplateFile()).get(lineOfFileItem));
-             lineOfFileItem++;
-         }
+        while((myLine = bufRead.readLine())!=null){
+            assertEquals(myLine,getLinesOfFile(taxpayer, generatorLogFile.getTaxPayerInfo(taxpayer),
+                    generatorLogFile.getInfoFromTemplateFile()).get(lineOfFileItem));
+            lineOfFileItem++;
+        }
     }
 
     private ArrayList<String> getLinesOfFile(Taxpayer taxpayer, String[] taxpayerInfo, ArrayList<String[]> infoFromTemplateFile) {

@@ -1,8 +1,6 @@
 package gui;
 import dataManagePackage.Database;
 import outputManagePackage.GeneratorLogFile;
-import outputManagePackage.OutputSystem;
-import outputManagePackage.UpdateInputFile;
 import outputManagePackage.VisualisationChart;
 
 import java.awt.Color;
@@ -31,7 +29,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 
 
 	public LoadedTaxpayersJDialog(JFrame appMainWindow) {
-		OutputSystem outputSystem = OutputSystem.getInstance();
+
 		VisualisationChart visualisationChart = VisualisationChart.getInstance();
 
 		this.appMainWindow = appMainWindow;

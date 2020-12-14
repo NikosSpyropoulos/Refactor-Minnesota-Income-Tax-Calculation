@@ -5,6 +5,26 @@ Income: 22570.0
 
 Receipts:
 
+Receipt ID: 2
+Date: 28/2/2014
+Kind: Entertainment
+Amount: 500.0
+Company: Floca Cafe
+Country: Greece
+City: Ioannina
+Street: Kavafi
+Number: 4
+
+Receipt ID: 3
+Date: 10/3/2014
+Kind: Health
+Amount: 500.0
+Company: Dentist
+Country: Greece
+City: Ioannina
+Street: Lamprou
+Number: 20
+
 Receipt ID: 4
 Date: 3/5/2014
 Kind: Other
@@ -34,13 +54,3 @@ Country: Greece
 City: Athens
 Street: Stavridi
 Number: 17
-
-Receipt ID: 8
-Date: 4/8/20
-Kind: Health
-Amount: 48596.0
-Company: SAS
-Country: SWD
-City: WDCW
-Street: WDWA
-Number: 8

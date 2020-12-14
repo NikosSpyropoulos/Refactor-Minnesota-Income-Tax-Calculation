@@ -31,7 +31,7 @@ public class GeneratorLogFile {
         if(typeOfFile.equals("TXT")){
 
             FileReader input = null;
-            input = new FileReader("outputManagePackage/InfoToLogFileTxt");
+            input = new FileReader("outputManagePackage/TagsLogFileTxt");
 
             BufferedReader bufRead = new BufferedReader(input);
             String myLine = null;
@@ -45,7 +45,7 @@ public class GeneratorLogFile {
 
             FileReader input = null;
 
-            input = new FileReader("outputManagePackage/InfoToLogFileXml");
+            input = new FileReader("outputManagePackage/TagsLogFileXml");
             BufferedReader bufRead = new BufferedReader(input);
             String myLine = null;
 

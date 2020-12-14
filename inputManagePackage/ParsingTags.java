@@ -25,7 +25,7 @@ public class ParsingTags {
         String myLine = null;
         boolean flagReceipts = false; //first line of receipts info
 
-        if(fileName.equals("InputInfoForTestTXT")){
+        if(fileName.equals("TagsInputFileTXT")){
             while(true){
                 try {
                     if (!((myLine = bufRead.readLine())!=null)) break;

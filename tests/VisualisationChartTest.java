@@ -5,7 +5,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.junit.Test;
 import outputManagePackage.VisualisationChart;
-
+import static constants.ApplicationConstants.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +15,11 @@ public class VisualisationChartTest {
 
     private Database database = Database.getInstance();
     private VisualisationChart visualisationChart = VisualisationChart.getInstance();
-    private final int TAXPAYER_INDEX = 0;
 
     @Test
     public void createTaxpayerReceiptsPieJFreeChart() {
         Taxpayer taxpayer = initializeTaxpayer();
-        visualisationChart.createTaxpayerReceiptsPieJFreeChart(TAXPAYER_INDEX);
+        visualisationChart.createTaxpayerReceiptsPieJFreeChart(TAXPAYER_INDEX_TXT);
         DefaultPieDataset receiptPieChartDataset = visualisationChart.getReceiptPieChartDataset();
 
         assertEquals(taxpayer.getSpecificReceiptsTotalAmount("Basic"), receiptPieChartDataset.getValue("Basic"));
@@ -37,7 +36,7 @@ public class VisualisationChartTest {
         String taxVariationType = taxpayer.getTaxInxrease()!=0? "Tax Increase" : "Tax Decrease";
         double taxVariationAmount = taxpayer.getTaxInxrease()!=0? taxpayer.getTaxInxrease() : taxpayer.getTaxDecrease()*(-1);
 
-        visualisationChart.createTaxpayerTaxAnalysisBarJFreeChart(TAXPAYER_INDEX);
+        visualisationChart.createTaxpayerTaxAnalysisBarJFreeChart(TAXPAYER_INDEX_TXT);
         DefaultCategoryDataset taxAnalysisBarChartDataset = visualisationChart.getTaxAnalysisBarChartDataset();
 
         assertEquals(taxpayer.getBasicTax(), taxAnalysisBarChartDataset.getValue("Tax", "Basic Tax"));
@@ -53,6 +52,6 @@ public class VisualisationChartTest {
         files.add("130456093_INFO.txt");
         database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
 
-        return database.getTaxpayerFromArrayList(TAXPAYER_INDEX);
+        return database.getTaxpayerFromArrayList(TAXPAYER_INDEX_TXT);
     }
 }

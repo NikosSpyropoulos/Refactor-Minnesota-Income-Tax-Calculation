@@ -47,7 +47,7 @@ public class UpdateInputFile {
     }
 
     private void initialiseTemplateFileValuesTXT(ArrayList<String[]> taxpayerInfo, ArrayList<String[]> receiptsInfo) throws IOException {
-        BufferedReader bufRead = getBufferedReader("tests/InputInfoForTestTXT");
+        BufferedReader bufRead = getBufferedReader("tests/TagsInputFileTXT");
         String myLine;
         boolean flagReceipts = false;
         while((myLine = bufRead.readLine())!=null){
@@ -60,7 +60,7 @@ public class UpdateInputFile {
     }
 
     private void initialiseTemplateFileValuesXML(ArrayList<String[]> taxpayerInfo, ArrayList<String[]> receiptsInfo) throws IOException {
-        BufferedReader bufRead = getBufferedReader("tests/InputInfoForTestXML");
+        BufferedReader bufRead = getBufferedReader("tests/TagsInputFileXML");
         String myLine;
         boolean flagReceipts = false;
         while((myLine = bufRead.readLine())!=null){
@@ -124,9 +124,9 @@ public class UpdateInputFile {
 
     public String[] getTaxPayerInfo(int taxpayerIndex) {
         return new String[]{database.getTaxpayerFromArrayList(taxpayerIndex).getName(),
-                    database.getTaxpayerFromArrayList(taxpayerIndex).getAFM(),
-                    database.getTaxpayerFromArrayList(taxpayerIndex).getFamilyStatus(),
-                    String.valueOf(database.getTaxpayerFromArrayList(taxpayerIndex).getIncome())};
+                database.getTaxpayerFromArrayList(taxpayerIndex).getAFM(),
+                database.getTaxpayerFromArrayList(taxpayerIndex).getFamilyStatus(),
+                String.valueOf(database.getTaxpayerFromArrayList(taxpayerIndex).getIncome())};
     }
 
     private PrintWriter getPrintWriter(String filePath) {
