@@ -25,4 +25,14 @@
 <Street> MOA </Street>
 <Number> 5 </Number>
 
+<ReceiptID> 8 </ReceiptID>
+<Date> 8/8/19 </Date>
+<Kind> Basic </Kind>
+<Amount> 25632.0 </Amount>
+<Company> PLMS </Company>
+<Country> POSOK </Country>
+<City> OSK </City>
+<Street> SOK </Street>
+<Number> 5 </Number>
+
 </Receipts>
