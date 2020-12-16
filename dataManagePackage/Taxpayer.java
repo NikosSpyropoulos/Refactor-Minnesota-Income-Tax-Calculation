@@ -3,6 +3,7 @@ import dataManagePackage.Receipt.Receipt;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import static constants.ApplicationConstants.*;
 
 public class Taxpayer {
 	private String name;
@@ -14,9 +15,6 @@ public class Taxpayer {
 	private double taxDecrease;
 	private double totalTax;
 	private ArrayList<Receipt> receipts;
-	private final int RATES = 0;
-	private final int VALUES = 1;
-	private final int INCOMES = 2;
 
 
 	public FamilyStatus getFamilyStatusObject(){
@@ -47,7 +45,6 @@ public class Taxpayer {
 		taxIncrease = 0;
 		taxDecrease = 0;
 		receipts = new ArrayList<Receipt>();
-
 	}
 
 	private void setBasicTaxBasedOnFamilyStatus(){
@@ -63,7 +60,6 @@ public class Taxpayer {
 	public double calculateTax(double totalIncome,ArrayList<ArrayList<Double>> taxpayerAmounts){
 
 		double tax = 0;
-
 		if (totalIncome < taxpayerAmounts.get(INCOMES).get(0)){
 			tax = taxpayerAmounts.get(VALUES).get(0) + (taxpayerAmounts.get(RATES).get(0) /100) * totalIncome;
 		}
@@ -83,7 +79,6 @@ public class Taxpayer {
 			tax = taxpayerAmounts.get(VALUES).get(4) + (taxpayerAmounts.get(RATES).get(4) /100 *
 					(totalIncome- taxpayerAmounts.get(INCOMES).get(3)));
 		}
-
 		return tax;
 	}
 
@@ -119,24 +114,21 @@ public class Taxpayer {
 	public double getSpecificReceiptsTotalAmount(String typeOfReceipt){
 
 		double totalAmount = 0;
-
 		for (Receipt receipt : receipts){
 			if (receipt.getKind().equals(typeOfReceipt)){
 				totalAmount += receipt.getAmount();
 			}
 		}
-
 		return (new BigDecimal(totalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
 	}
 
 	public double getTotalReceiptsAmount(){
-		double totalReceiptsAmount = 0;
 
+		double totalReceiptsAmount = 0;
 		for (Receipt receipt : receipts){
 			totalReceiptsAmount += receipt.getAmount();
 		}
-
 		return (new BigDecimal(totalReceiptsAmount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 
@@ -170,13 +162,11 @@ public class Taxpayer {
 
 	public void addReceiptToList(Receipt receipt){
 		receipts.add(receipt);
-
 		calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
 	}
 
 	public void removeReceiptFromList(int index){
 		receipts.remove(index);
-
 		calculateTaxpayerTaxIncreaseOrDecreaseBasedOnReceipts();
 	}
 
@@ -185,7 +175,6 @@ public class Taxpayer {
 		for (Receipt receipt : receipts){
 			totalReceiptsAmount += receipt.getAmount();
 		}
-
 		taxIncrease = 0;
 		taxDecrease = 0;
 		if ((totalReceiptsAmount/ income) < 0.2){
@@ -200,7 +189,6 @@ public class Taxpayer {
 		else{
 			taxDecrease = basicTax * 0.30;
 		}
-
 		totalTax = basicTax + taxIncrease - taxDecrease;
 	}
 

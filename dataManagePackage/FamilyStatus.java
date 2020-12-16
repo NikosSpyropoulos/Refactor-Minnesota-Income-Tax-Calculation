@@ -20,8 +20,6 @@ public class FamilyStatus {
         FamilyStatus.values = values;
     }
 
-
-
     public static void setValuesOfStatusList(ArrayList<ArrayList<Double>> valuesOfStatusList) {
         FamilyStatus.valuesOfStatusList = valuesOfStatusList;
     }

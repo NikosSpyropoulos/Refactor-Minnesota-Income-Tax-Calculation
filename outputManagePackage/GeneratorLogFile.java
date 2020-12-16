@@ -1,19 +1,18 @@
 package outputManagePackage;
 
 import dataManagePackage.Database;
-import dataManagePackage.Receipt.Receipt;
 import dataManagePackage.Taxpayer;
 
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
+import static constants.ApplicationConstants.*;
 
 public class GeneratorLogFile {
 
     private Database database = Database.getInstance();
     private final String typeOfFile;
     private ArrayList<String[]> infoFromTemplateFile;
-    private final int CHECK_IF_INCREASE = 4;
 
     public GeneratorLogFile(String typeOfFile) {
         this.typeOfFile = typeOfFile;
@@ -28,10 +27,10 @@ public class GeneratorLogFile {
 
         ArrayList<String[]> taxpayerInfo = new ArrayList<>();
 
-        if(typeOfFile.equals("TXT")){
+        if(typeOfFile.equals(INPUT_FILE_TYPE_TXT)){
 
             FileReader input = null;
-            input = new FileReader("outputManagePackage/TagsLogFileTxt");
+            input = new FileReader("files/filesFormat/TagsLogFileTxt");
 
             BufferedReader bufRead = new BufferedReader(input);
             String myLine = null;
@@ -41,11 +40,11 @@ public class GeneratorLogFile {
                 taxpayerInfo.add(new String[]{myLine + " ", ""});
             }
         }
-        else if(typeOfFile.equals("XML")){
+        else if(typeOfFile.equals(INPUT_FILE_TYPE_XML)){
 
             FileReader input = null;
 
-            input = new FileReader("outputManagePackage/TagsLogFileXml");
+            input = new FileReader("files/filesFormat/TagsLogFileXml");
             BufferedReader bufRead = new BufferedReader(input);
             String myLine = null;
 
@@ -68,10 +67,10 @@ public class GeneratorLogFile {
         PrintWriter outputStream = null;
         try
         {
-            if(typeOfFile.equals("XML")) {
+            if(typeOfFile.equals(INPUT_FILE_TYPE_XML)) {
                 outputStream = new PrintWriter(new FileOutputStream(folderSavePath + "//" + getTaxpayer(taxpayerIndex).getAFM() + "_LOG.xml"));
             }
-            else if(typeOfFile.equals("TXT")){
+            else if(typeOfFile.equals(INPUT_FILE_TYPE_TXT)){
                 outputStream = new PrintWriter(new FileOutputStream(folderSavePath+"//"+getTaxpayer(taxpayerIndex).getAFM()+"_LOG.txt"));
             }
         }

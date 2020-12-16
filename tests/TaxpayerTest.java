@@ -1,7 +1,6 @@
 package tests;
 
 import dataManagePackage.Database;
-import dataManagePackage.FamilyStatus;
 import dataManagePackage.Receipt.Receipt;
 import dataManagePackage.Taxpayer;
 import org.junit.Test;
@@ -141,7 +140,7 @@ public class TaxpayerTest {
         List<String> files = new ArrayList<>();
         files.add("130456093_INFO.txt");
         files.add("130456094_INFO.xml");
-        database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
+        database.proccessTaxpayersDataFromFilesIntoDatabase("files/InputFiles", files);
     }
 
 }

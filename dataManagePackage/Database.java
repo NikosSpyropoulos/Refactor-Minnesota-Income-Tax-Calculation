@@ -8,6 +8,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import static constants.ApplicationConstants.*;
+
 
 public class Database {
 	private String taxpayersInfoFilesPath;
@@ -81,16 +83,15 @@ public class Database {
                return (name.toLowerCase().endsWith("_info.txt") || name.toLowerCase().endsWith("_info.xml"));
             }
          };
-		
 		for (File file : taxpayersInfoFilesPathFileObject.listFiles(fileNameFilter)){
 			if (!file.getName().contains(taxpayersArrayList.get(index).getAFM())) continue;
 			
-			if (file.getName().toLowerCase().endsWith(".txt")){
-				UpdateInputFile updateInputFile = new UpdateInputFile("TXT");
+			if (file.getName().toLowerCase().endsWith(INPUT_FILE_FORMAT_TXT)){
+				UpdateInputFile updateInputFile = new UpdateInputFile(INPUT_FILE_TYPE_TXT);
 				updateInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
-			if (file.getName().toLowerCase().endsWith(".xml")){
-				UpdateInputFile updateInputFile = new UpdateInputFile("XML");
+			if (file.getName().toLowerCase().endsWith(INPUT_FILE_FORMAT_XML)){
+				UpdateInputFile updateInputFile = new UpdateInputFile(INPUT_FILE_TYPE_XML);
 				updateInputFile.saveUpdatedTaxpayerInputFile(file.getAbsolutePath(), index);
 			}
 			break;

@@ -32,12 +32,13 @@ public class ApplicationConstants {
     public static final int LAST_LINE_OF_XML_FILE = 11; //Txt File has less lines than Xml
     public static final int END_INFO_RECEIPTS = 10;
 
-    //Constants of Tests
+    //General Constants
     public static final String INPUT_FILE_TYPE_TXT = "TXT";
     public static final String INPUT_FILE_TYPE_XML = "XML";
     public static final String OUTPUT_FILE_TYPE_TXT = "TXT";
     public static final String OUTPUT_FILE_TYPE_XML = "XML";
-    public static final String INPUT_FILE_END_TXT = ".txt";
+    public static final String INPUT_FILE_FORMAT_TXT = ".txt";
+    public static final String INPUT_FILE_FORMAT_XML = ".xml";
     public static final int TAXPAYER_INDEX_TXT = 0;
     public static final int TAXPAYER_INDEX_XML = 1;
     public static final int TAXPAYER_TAGS = 0;

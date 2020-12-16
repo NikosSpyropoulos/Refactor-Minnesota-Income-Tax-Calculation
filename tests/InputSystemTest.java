@@ -13,17 +13,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static constants.ApplicationConstants.*;
 import static junit.framework.TestCase.assertEquals;
 
 
 public class InputSystemTest {
 
-    private final String INPUT_FILE_TYPE_TXT = ".txt";
-    private final String INPUT_FILE_TYPE_XML = ".xml";
-    private final int TAXPAYER_TAGS = 0;
-    private final int RECEIPTS_TAGS = 1;
-    private final int TAXPAYER_INDEX_TXT = 0;
-    private final int TAXPAYER_INDEX_XML = 1;
     private  Database database = Database.getInstance();
     private InputSystem inputSystem = InputSystem.getInstance();
     private ParsingTags parsingTags = new ParsingTags();
@@ -32,15 +27,15 @@ public class InputSystemTest {
     @Test
     public void addTaxpayersDataFromFilesIntoDatabase() throws IOException {
 
-        testFiles("InputFiles/130456094_INFO.xml", parsingTags.getTags("TagsInputFileXML"));
-        testFiles("InputFiles/130456093_INFO.txt", parsingTags.getTags("TagsInputFileTXT"));
+        testFiles("files/InputFiles/130456094_INFO.xml", parsingTags.getTags("TagsInputFileXML"));
+        testFiles("files/InputFiles/130456093_INFO.txt", parsingTags.getTags("TagsInputFileTXT"));
 
     }
 
     private void testFiles(String path,  ArrayList<ArrayList<String[]>> tagsForFile) throws IOException {
 
         Taxpayer taxpayer;
-        if(path.endsWith(INPUT_FILE_TYPE_TXT)) taxpayer = taxpayer(TAXPAYER_INDEX_TXT);
+        if(path.endsWith(INPUT_FILE_FORMAT_TXT)) taxpayer = taxpayer(TAXPAYER_INDEX_TXT);
         else taxpayer = taxpayer(TAXPAYER_INDEX_XML);
 
         String[] taxpayerInfo = {taxpayer.getName(), taxpayer.getAFM(), taxpayer.getFamilyStatus(),
@@ -66,7 +61,7 @@ public class InputSystemTest {
                 for (int i =0; i< allReceipts.size(); i++){
                     if(myLine.isBlank())  myLine = bufRead.readLine();
                     for (int j =0; j< 9; j++) {
-                        if(path.endsWith(INPUT_FILE_TYPE_TXT)){
+                        if(path.endsWith(INPUT_FILE_FORMAT_TXT)){
                             assertEquals(myLine.substring(tagsForFile.get(RECEIPTS_TAGS).get(j)[0].length(),
                                     myLine.length() - tagsForFile.get(RECEIPTS_TAGS).get(j)[1].length()),
                                     allReceipts.get(i).get(j));
@@ -82,7 +77,7 @@ public class InputSystemTest {
                 }
             }
             else {
-                if(path.endsWith(INPUT_FILE_TYPE_TXT)) {
+                if(path.endsWith(INPUT_FILE_FORMAT_TXT)) {
                     assertEquals(myLine.substring(tagsForFile.get(TAXPAYER_TAGS).get(lineCounterTaxPayer)[0].length(),
                             myLine.length() - tagsForFile.get(TAXPAYER_TAGS).get(lineCounterTaxPayer)[1].length()),
                             taxpayerInfo[lineCounterTaxPayer]);
@@ -108,7 +103,7 @@ public class InputSystemTest {
         files.add("130456093_INFO.txt");
         files.add("130456094_INFO.xml");
         try {
-            inputSystem.addTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
+            inputSystem.addTaxpayersDataFromFilesIntoDatabase("files/InputFiles", files);
         } catch (IOException e) {
             e.printStackTrace();
         }

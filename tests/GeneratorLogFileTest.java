@@ -4,6 +4,7 @@ import dataManagePackage.Database;
 import dataManagePackage.Taxpayer;
 import org.junit.Test;
 import outputManagePackage.GeneratorLogFile;
+import static constants.ApplicationConstants.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,23 +18,15 @@ import static junit.framework.TestCase.assertEquals;
 public class GeneratorLogFileTest {
 
     private Database database = Database.getInstance();
-    private final int CHECK_IF_INCREASE = 4;
-    private final String INPUT_FILE_TXT = "TXT";
-    private final String INPUT_FILE_XML = "XML";
-    private final String OUTPUT_FILE_TXT = "TXT";
-    private final String OUTPUT_FILE_XML = "XML";
-    private final int TAXPAYER_TXT = 0;
-    private final int TAXPAYER_XML = 1;
 
     @Test
     public void saveTaxpayerInfoToLogFile() throws IOException {
 
         initializeTaxPayers();
-
-        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_TXT), INPUT_FILE_TXT, OUTPUT_FILE_TXT);
-        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_TXT), INPUT_FILE_TXT, OUTPUT_FILE_XML);
-        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_XML), INPUT_FILE_XML, OUTPUT_FILE_TXT);
-        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_XML), INPUT_FILE_XML, OUTPUT_FILE_XML);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_INDEX_TXT), INPUT_FILE_TYPE_TXT, OUTPUT_FILE_TYPE_TXT);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_INDEX_TXT), INPUT_FILE_TYPE_TXT, OUTPUT_FILE_TYPE_XML);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_INDEX_XML), INPUT_FILE_TYPE_XML, OUTPUT_FILE_TYPE_TXT);
+        CheckInfoEquality(database.getTaxpayerFromArrayList(TAXPAYER_INDEX_XML), INPUT_FILE_TYPE_XML, OUTPUT_FILE_TYPE_XML);
 
     }
 
@@ -41,7 +34,7 @@ public class GeneratorLogFileTest {
         List<String> files = new ArrayList<>();
         files.add("130456093_INFO.txt");
         files.add("130456094_INFO.xml");
-        database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
+        database.proccessTaxpayersDataFromFilesIntoDatabase("files/InputFiles", files);
     }
 
     private void CheckInfoEquality(Taxpayer taxpayer, String typeOfInputFile, String typeOfLOGFile) throws IOException {
@@ -82,12 +75,12 @@ public class GeneratorLogFileTest {
 
     private FileReader getFileReader(String typeOfFile, String typeOfLOGFile, GeneratorLogFile generatorLogFile) throws FileNotFoundException {
         FileReader input = null;
-        if(typeOfFile.equals("TXT")) {
+        if(typeOfFile.equals(INPUT_FILE_TYPE_TXT)) {
 
-            input = readFromFile(typeOfLOGFile, generatorLogFile, TAXPAYER_TXT);
+            input = readFromFile(typeOfLOGFile, generatorLogFile, TAXPAYER_INDEX_TXT);
 
         }else{
-            input = readFromFile(typeOfLOGFile, generatorLogFile, TAXPAYER_XML);
+            input = readFromFile(typeOfLOGFile, generatorLogFile, TAXPAYER_INDEX_XML);
         }
         return input;
     }
@@ -95,12 +88,12 @@ public class GeneratorLogFileTest {
     private FileReader readFromFile(String typeOfLOGFile, GeneratorLogFile generatorLogFile, int index) throws FileNotFoundException {
 
         FileReader input;
-        generatorLogFile.saveTaxpayerInfoToLogFile("tests", index);
+        generatorLogFile.saveTaxpayerInfoToLogFile("files/filesFormat/", index);
 
-        if (typeOfLOGFile.equals("TXT"))
-            input = new FileReader("tests/" + database.getTaxpayerFromArrayList(index).getAFM() + "_LOG.txt");
+        if (typeOfLOGFile.equals(OUTPUT_FILE_TYPE_TXT))
+            input = new FileReader("files/filesFormat/" + database.getTaxpayerFromArrayList(index).getAFM() + "_LOG.txt");
         else
-            input = new FileReader("tests/" + database.getTaxpayerFromArrayList(index).getAFM() + "_LOG.xml");
+            input = new FileReader("files/filesFormat/" + database.getTaxpayerFromArrayList(index).getAFM() + "_LOG.xml");
         return input;
     }
 }

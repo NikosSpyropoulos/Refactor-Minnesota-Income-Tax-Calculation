@@ -7,29 +7,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import static constants.ApplicationConstants.*;
 
 public class InputSystem {
 
 	private Database database = Database.getInstance();
-	private static final String TAXPAYER = "taxpayer";
-	private static final String RECEIPT = "receipt";
-	private static final int END_OF_TAXPAYER_INFO = 4;
-	private static final int END_OF_RECEIPT_INFO = 9;
-	private static final int KIND = 2;
-	private static final int ID = 0;
-	private static final int DATE = 1;
-	private static final int AMOUNT = 3;
-	private static final int RECEIPT_NAME = 4;
-	private static final int COUNTRY = 5;
-	private static final int CITY = 6;
-	private static final int STREET = 7;
-	private static final int NUMBER = 8;
-	private static final int TAXPAYER_NAME = 0;
-	private static final int AFM = 1;
-	private static final int STATUS = 2;
-	private static final int INCOME = 3;
 	private ArrayList<ArrayList<String[]>> tags;
-
 	private static InputSystem firstInstance = null;
 
 	private InputSystem(){ }
@@ -45,10 +28,10 @@ public class InputSystem {
 		for (String afmInfoFile : taxpayersAfmInfoFiles)
 		{
 			ParsingTags parsingTags = new ParsingTags();
-			if (afmInfoFile.endsWith(".txt")){
+			if (afmInfoFile.endsWith(INPUT_FILE_FORMAT_TXT)){
 				tags = parsingTags.getTags("TagsInputFileTXT");
 			}
-			else if (afmInfoFile.endsWith(".xml")){
+			else if (afmInfoFile.endsWith(INPUT_FILE_FORMAT_XML)){
 				tags = parsingTags.getTags("TagsInputFileXML");
 			}
 			loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
@@ -132,12 +115,12 @@ public class InputSystem {
 	private ArrayList<String> getDataFromFile(ArrayList<String> fileLines, String type){
 
 		ArrayList<String> allInfo = new ArrayList<>();
-		if(type.equals("taxpayer")){
+		if(type.equals(TAXPAYER)){
 			for(int i = 0; i < fileLines.size(); i++){
 				allInfo.add(getParameterValueFromFileLine(fileLines.get(i), tags.get(0).get(i)[0], tags.get(0).get(i)[1]));
 			}
 		}
-		else if(type.equals("receipt")){
+		else if(type.equals(RECEIPT)){
 			for(int i = 0; i < fileLines.size(); i++){
 				allInfo.add(getParameterValueFromFileLine(fileLines.get(i), tags.get(1).get(i)[0], tags.get(1).get(i)[1]));
 			}
@@ -148,7 +131,7 @@ public class InputSystem {
 	private ArrayList<ArrayList<Double>> getValuesOfStatus(String familyStatus) throws IOException {
 
 		FileReader input = null;
-		input = new FileReader("inputManagePackage/valuesForCalcTax");
+		input = new FileReader("files/valuesForCalcTax");
 
 		BufferedReader bufRead = new BufferedReader(input);
 		String myLine = null;

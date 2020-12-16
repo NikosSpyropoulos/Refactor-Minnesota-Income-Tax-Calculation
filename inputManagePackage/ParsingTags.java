@@ -13,14 +13,12 @@ public class ParsingTags {
         ArrayList<ArrayList<String[]>> infoOfFile = new ArrayList<>();
         ArrayList<String[]> taxpayerInfo = new ArrayList<>();
         ArrayList<String[]> receiptsInfo = new ArrayList<>();
-
         FileReader input = null;
         try {
-            input = new FileReader("tests/"+fileName);
+            input = new FileReader("files/filesFormat/"+fileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         BufferedReader bufRead = new BufferedReader(input);
         String myLine = null;
         boolean flagReceipts = false; //first line of receipts info
@@ -54,19 +52,14 @@ public class ParsingTags {
                     receiptsArray[1] = " " + myLine.split("\\s+")[1];
                     receiptsInfo.add(receiptsArray);
                 }
-
                 else {
-
                     String[] taxpayerArray = new String[2];
                     taxpayerArray[0] = myLine.split("\\s+")[0] + " ";
                     taxpayerArray[1] = " " + myLine.split("\\s+")[1];
-
                     taxpayerInfo.add(taxpayerArray);
-
                 }
             }
         }
-
         infoOfFile.add(taxpayerInfo);
         infoOfFile.add(receiptsInfo);
 

@@ -2,7 +2,7 @@ package outputManagePackage;
 
 import dataManagePackage.Database;
 import dataManagePackage.Receipt.Receipt;
-import dataManagePackage.Taxpayer;
+import static constants.ApplicationConstants.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,10 +11,7 @@ public class UpdateInputFile {
 
     private final Database database = Database.getInstance();
     private final String typeOfFile;
-    private final int LAST_LINE_OF_XML_FILE = 11; //Txt File has less lines than Xml
-    private final int END_INFO_RECEIPTS = 10;
     private ArrayList<ArrayList<String[]>> infoFromInputTemplateFile;
-
 
     public UpdateInputFile(String typeOfFile){
         this.typeOfFile = typeOfFile;
@@ -31,11 +28,10 @@ public class UpdateInputFile {
         ArrayList<ArrayList<String[]>> infoOfFile = new ArrayList<>();
         ArrayList<String[]> taxpayerInfo = new ArrayList<>();
         ArrayList<String[]> receiptsInfo = new ArrayList<>();
-
-        if(typeOfFile.equals("TXT")){
+        if(typeOfFile.equals(INPUT_FILE_TYPE_TXT)){
             initialiseTemplateFileValuesTXT(taxpayerInfo, receiptsInfo);
         }
-        else if(typeOfFile.equals("XML")){
+        else if(typeOfFile.equals(INPUT_FILE_TYPE_XML)){
             initialiseTemplateFileValuesXML(taxpayerInfo, receiptsInfo);
         }
 
@@ -47,7 +43,7 @@ public class UpdateInputFile {
     }
 
     private void initialiseTemplateFileValuesTXT(ArrayList<String[]> taxpayerInfo, ArrayList<String[]> receiptsInfo) throws IOException {
-        BufferedReader bufRead = getBufferedReader("tests/TagsInputFileTXT");
+        BufferedReader bufRead = getBufferedReader("files/filesFormat/TagsInputFileTXT");
         String myLine;
         boolean flagReceipts = false;
         while((myLine = bufRead.readLine())!=null){
@@ -60,7 +56,7 @@ public class UpdateInputFile {
     }
 
     private void initialiseTemplateFileValuesXML(ArrayList<String[]> taxpayerInfo, ArrayList<String[]> receiptsInfo) throws IOException {
-        BufferedReader bufRead = getBufferedReader("tests/TagsInputFileXML");
+        BufferedReader bufRead = getBufferedReader("files/filesFormat/TagsInputFileXML");
         String myLine;
         boolean flagReceipts = false;
         while((myLine = bufRead.readLine())!=null){

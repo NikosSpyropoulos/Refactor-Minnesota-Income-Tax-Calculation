@@ -3,7 +3,6 @@ package tests;
 import dataManagePackage.Database;
 import dataManagePackage.Taxpayer;
 import org.junit.Test;
-import outputManagePackage.GeneratorLogFile;
 import outputManagePackage.UpdateInputFile;
 
 import java.io.BufferedReader;
@@ -14,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import static constants.ApplicationConstants.*;
 import static junit.framework.TestCase.assertEquals;
-
-
 
 public class UpdateInputFileTest {
 
@@ -34,18 +31,18 @@ public class UpdateInputFileTest {
         List<String> files = new ArrayList<>();
         files.add("130456093_INFO.txt");
         files.add("130456094_INFO.xml");
-        database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
+        database.proccessTaxpayersDataFromFilesIntoDatabase("files/InputFiles", files);
     }
 
     private void CheckInfoEquality(Taxpayer taxpayer, String typeOfInputFile, int taxpayerIndex) throws IOException {
 
         UpdateInputFile updateInputFile = new UpdateInputFile(typeOfInputFile);
         taxpayer.removeReceiptFromList(0);
-        updateInputFile.saveUpdatedTaxpayerInputFile("InputFiles/"+ taxpayer.getAFM() + "_INFO."+ typeOfInputFile.toLowerCase() , taxpayerIndex);
+        updateInputFile.saveUpdatedTaxpayerInputFile("files/InputFiles/" + taxpayer.getAFM() + "_INFO."+ typeOfInputFile.toLowerCase() , taxpayerIndex);
         String[] taxpayerInfo = updateInputFile.getTaxPayerInfo(taxpayerIndex);
         ArrayList<ArrayList<String>> taxpayerReceipts = updateInputFile.getReceipts(taxpayerIndex);
         ArrayList<ArrayList<String[]>> infoFromTemplateFile = updateInputFile.getInfoFromTemplateFile();
-        BufferedReader bufRead = getBufferedReader("InputFiles/"+ taxpayer.getAFM() + "_INFO." + typeOfInputFile.toLowerCase());
+        BufferedReader bufRead = getBufferedReader("files/InputFiles/" + taxpayer.getAFM() + "_INFO." + typeOfInputFile.toLowerCase());
 
         String myLine;
         int templateIndex = 0;

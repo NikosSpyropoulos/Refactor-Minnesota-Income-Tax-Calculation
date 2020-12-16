@@ -50,7 +50,7 @@ public class VisualisationChartTest {
         List<String> files = new ArrayList<>();
         files.add("130456094_INFO.xml");
         files.add("130456093_INFO.txt");
-        database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
+        database.proccessTaxpayersDataFromFilesIntoDatabase("files/InputFiles", files);
 
         return database.getTaxpayerFromArrayList(TAXPAYER_INDEX_TXT);
     }

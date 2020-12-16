@@ -1,7 +1,5 @@
 package tests;
 import dataManagePackage.Database;
-import dataManagePackage.FamilyStatus;
-import dataManagePackage.Receipt.Receipt;
 import dataManagePackage.Taxpayer;
 import org.junit.Test;
 import outputManagePackage.UpdateInputFile;
@@ -12,16 +10,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import static constants.ApplicationConstants.*;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 
 public class DatabaseTest {
 
-    private final String INPUT_FILE_TYPE_TXT = "TXT";
-    private final String INPUT_FILE_TYPE_XML = "XML";
-    private final int TAXPAYER_INDEX_TXT = 0;
-    private final int TAXPAYER_INDEX_XML = 1;
     private  Database database = Database.getInstance();
 
     @Test
@@ -83,16 +78,14 @@ public class DatabaseTest {
     private void CheckInfoEquality(Taxpayer taxpayer, String typeOfInputFile, int taxpayerIndex) throws IOException {
 
         UpdateInputFile updateInputFile = new UpdateInputFile(typeOfInputFile);
-
-        database.setTaxpayersInfoFilesPath("InputFiles/");
-
+        database.setTaxpayersInfoFilesPath("files/InputFiles/");
         taxpayer.removeReceiptFromList(0);
         database.updateTaxpayerInputFile(taxpayerIndex);
 
         String[] taxpayerInfo = updateInputFile.getTaxPayerInfo(taxpayerIndex);
         ArrayList<ArrayList<String>> taxpayerReceipts = updateInputFile.getReceipts(taxpayerIndex);
         ArrayList<ArrayList<String[]>> infoFromTemplateFile = updateInputFile.getInfoFromTemplateFile();
-        BufferedReader bufRead = getBufferedReader("InputFiles/"+ taxpayer.getAFM() + "_INFO." + typeOfInputFile.toLowerCase());
+        BufferedReader bufRead = getBufferedReader("files/InputFiles/" + taxpayer.getAFM() + "_INFO." + typeOfInputFile.toLowerCase());
 
         String myLine;
         int templateIndex = 0;
@@ -140,7 +133,7 @@ public class DatabaseTest {
         List<String> files = new ArrayList<>();
         files.add("130456093_INFO.txt");
         files.add("130456094_INFO.xml");
-        database.proccessTaxpayersDataFromFilesIntoDatabase("InputFiles", files);
+        database.proccessTaxpayersDataFromFilesIntoDatabase("files/InputFiles", files);
     }
 
     private BufferedReader getBufferedReader(String path) throws FileNotFoundException {
