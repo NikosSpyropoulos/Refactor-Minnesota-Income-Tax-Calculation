@@ -2,6 +2,7 @@ package src.outputManagePackage;
 
 import src.dataManagePackage.Database;
 import src.dataManagePackage.Taxpayer;
+import src.inputManagePackage.ParsingTags;
 
 import javax.swing.*;
 import java.io.*;
@@ -12,53 +13,17 @@ public class GeneratorLogFile {
 
     private Database database = Database.getInstance();
     private final String typeOfFile;
-    private ArrayList<String[]> infoFromTemplateFile;
+    private ArrayList<String[]> tags;
 
     public GeneratorLogFile(String typeOfFile) {
         this.typeOfFile = typeOfFile;
-        try {
-            this.infoFromTemplateFile = getInfoFromTemplateFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        ParsingTags parsingTags = new ParsingTags();
+        if (typeOfFile.endsWith(INPUT_FILE_TYPE_TXT)){
+            tags = parsingTags.getTagsForLogFile("TagsLogFileTXT");
         }
-    }
-
-    public ArrayList<String[]> getInfoFromTemplateFile() throws IOException {
-
-        ArrayList<String[]> taxpayerInfo = new ArrayList<>();
-
-        if(typeOfFile.equals(INPUT_FILE_TYPE_TXT)){
-
-            FileReader input = null;
-            input = new FileReader("files/filesFormat/TagsLogFileTxt");
-
-            BufferedReader bufRead = new BufferedReader(input);
-            String myLine = null;
-
-            while((myLine = bufRead.readLine())!=null){
-
-                taxpayerInfo.add(new String[]{myLine + " ", ""});
-            }
+        else if (typeOfFile.endsWith(INPUT_FILE_TYPE_XML)){
+            tags = parsingTags.getTagsForLogFile("TagsLogFileXML");
         }
-        else if(typeOfFile.equals(INPUT_FILE_TYPE_XML)){
-
-            FileReader input = null;
-
-            input = new FileReader("files/filesFormat/TagsLogFileXml");
-            BufferedReader bufRead = new BufferedReader(input);
-            String myLine = null;
-
-            while((myLine = bufRead.readLine())!=null){
-                String[] taxPayerArray = new String[2];
-                taxPayerArray[0] = myLine.split("\\s+")[0]+ " ";
-                taxPayerArray[1] = " " + myLine.split("\\s+")[1];
-
-
-                taxpayerInfo.add(taxPayerArray);
-            }
-        }
-
-        return taxpayerInfo;
 
     }
 
@@ -96,14 +61,14 @@ public class GeneratorLogFile {
             if ( i == CHECK_IF_INCREASE){
                 if (taxpayer.getTaxInxrease() == 0) {
                     i++;    //overpass "Tax Increase: " go to "Tax Decrease: "
-                    outputStream.println(infoFromTemplateFile.get(i)[0] + getTaxPayerInfo(taxpayer)[i] + infoFromTemplateFile.get(i)[1]);
+                    outputStream.println(tags.get(i)[0] + getTaxPayerInfo(taxpayer)[i] + tags.get(i)[1]);
                 } else {
-                    outputStream.println(infoFromTemplateFile.get(i)[0] + getTaxPayerInfo(taxpayer)[i] + infoFromTemplateFile.get(i)[1]);
+                    outputStream.println(tags.get(i)[0] + getTaxPayerInfo(taxpayer)[i] + tags.get(i)[1]);
                     i++;    //overpass "Tax Decrease: "
                 }
                 continue;
             }
-            outputStream.println(infoFromTemplateFile.get(i)[0] + getTaxPayerInfo(taxpayer)[i] + infoFromTemplateFile.get(i)[1]);
+            outputStream.println(tags.get(i)[0] + getTaxPayerInfo(taxpayer)[i] + tags.get(i)[1]);
 
         }
     }

@@ -29,10 +29,10 @@ public class InputSystem {
 		{
 			ParsingTags parsingTags = new ParsingTags();
 			if (afmInfoFile.endsWith(INPUT_FILE_FORMAT_TXT)){
-				tags = parsingTags.getTags("TagsInputFileTXT");
+				tags = parsingTags.getTagsForUpdatedFile("TagsInputFileTXT");
 			}
 			else if (afmInfoFile.endsWith(INPUT_FILE_FORMAT_XML)){
-				tags = parsingTags.getTags("TagsInputFileXML");
+				tags = parsingTags.getTagsForUpdatedFile("TagsInputFileXML");
 			}
 			loadTaxpayerDataFromFileIntoDatabase(afmInfoFilesFolderPath, afmInfoFile);
 		}

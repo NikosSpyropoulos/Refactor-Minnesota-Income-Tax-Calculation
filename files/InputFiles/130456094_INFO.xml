@@ -5,16 +5,6 @@
 
 <Receipts>
 
-<ReceiptID> 2 </ReceiptID>
-<Date> 10/5/2014 </Date>
-<Kind> Entertainment </Kind>
-<Amount> 2000.0 </Amount>
-<Company> Hotel Du Lac </Company>
-<Country> Greece </Country>
-<City> Ioannina </City>
-<Street> Lake </Street>
-<Number> 89 </Number>
-
 <ReceiptID> 3 </ReceiptID>
 <Date> 5/6/2014 </Date>
 <Kind> Basic </Kind>

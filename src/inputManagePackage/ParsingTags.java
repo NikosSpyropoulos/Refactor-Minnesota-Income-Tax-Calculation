@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ParsingTags {
 
-    public ArrayList<ArrayList<String[]>> getTags(String fileName) {
+    public ArrayList<ArrayList<String[]>> getTagsForUpdatedFile(String fileName) {
 
         ArrayList<ArrayList<String[]>> infoOfFile = new ArrayList<>();
         ArrayList<String[]> taxpayerInfo = new ArrayList<>();
@@ -62,7 +62,44 @@ public class ParsingTags {
         }
         infoOfFile.add(taxpayerInfo);
         infoOfFile.add(receiptsInfo);
-
         return infoOfFile;
+    }
+
+    public  ArrayList<String[]> getTagsForLogFile(String fileName) {
+
+        ArrayList<String[]> taxpayerInfo = new ArrayList<>();
+        FileReader input = null;
+        try {
+            input = new FileReader("files/filesFormat/"+fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedReader bufRead = new BufferedReader(input);
+        String myLine = null;
+
+        if(fileName.equals("TagsLogFileTXT")){
+            while(true){
+                try {
+                    if (!((myLine = bufRead.readLine())!=null)) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                taxpayerInfo.add(new String[]{myLine + " ", ""});
+            }
+        }
+        else if(fileName.equals("TagsLogFileXML")){
+            while(true){
+                try {
+                    if (!((myLine = bufRead.readLine())!=null)) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String[] taxPayerArray = new String[2];
+                taxPayerArray[0] = myLine.split("\\s+")[0]+ " ";
+                taxPayerArray[1] = " " + myLine.split("\\s+")[1];
+                taxpayerInfo.add(taxPayerArray);
+            }
+        }
+        return taxpayerInfo;
     }
 }

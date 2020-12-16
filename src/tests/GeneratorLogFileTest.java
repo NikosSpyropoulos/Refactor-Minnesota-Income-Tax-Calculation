@@ -3,6 +3,7 @@ package src.tests;
 import src.dataManagePackage.Database;
 import src.dataManagePackage.Taxpayer;
 import org.junit.Test;
+import src.inputManagePackage.ParsingTags;
 import src.outputManagePackage.GeneratorLogFile;
 import static constants.ApplicationConstants.*;
 
@@ -18,6 +19,7 @@ import static junit.framework.TestCase.assertEquals;
 public class GeneratorLogFileTest {
 
     private Database database = Database.getInstance();
+    private ParsingTags parsingTags = new ParsingTags();
 
     @Test
     public void saveTaxpayerInfoToLogFile() throws IOException {
@@ -48,7 +50,7 @@ public class GeneratorLogFileTest {
 
         while((myLine = bufRead.readLine())!=null){
             assertEquals(myLine,getLinesOfFile(taxpayer, generatorLogFile.getTaxPayerInfo(taxpayer),
-                    generatorLogFile.getInfoFromTemplateFile()).get(lineOfFileItem));
+                    parsingTags.getTagsForLogFile("TagsLogFile"+typeOfLOGFile)).get(lineOfFileItem));
             lineOfFileItem++;
         }
     }

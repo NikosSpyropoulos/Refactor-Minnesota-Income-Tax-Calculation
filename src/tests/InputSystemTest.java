@@ -27,8 +27,8 @@ public class InputSystemTest {
     @Test
     public void addTaxpayersDataFromFilesIntoDatabase() throws IOException {
 
-        testFiles("files/InputFiles/130456094_INFO.xml", parsingTags.getTags("TagsInputFileXML"));
-        testFiles("files/InputFiles/130456093_INFO.txt", parsingTags.getTags("TagsInputFileTXT"));
+        testFiles("files/InputFiles/130456094_INFO.xml", parsingTags.getTagsForUpdatedFile("TagsInputFileXML"));
+        testFiles("files/InputFiles/130456093_INFO.txt", parsingTags.getTagsForUpdatedFile("TagsInputFileTXT"));
 
     }
 
