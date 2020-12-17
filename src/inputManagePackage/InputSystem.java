@@ -1,8 +1,10 @@
 package src.inputManagePackage;
 import src.dataManagePackage.Database;
 import src.dataManagePackage.FamilyStatus;
-import src.dataManagePackage.Receipt.Receipt;
+import src.dataManagePackage.Receipt;
 import src.dataManagePackage.Taxpayer;
+import src.managerTags.ParsingTags;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

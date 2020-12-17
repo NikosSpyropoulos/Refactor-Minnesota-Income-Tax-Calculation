@@ -2,7 +2,7 @@ package src.outputManagePackage;
 
 import src.dataManagePackage.Database;
 import src.dataManagePackage.Taxpayer;
-import src.inputManagePackage.ParsingTags;
+import src.managerTags.ParsingTags;
 
 import javax.swing.*;
 import java.io.*;

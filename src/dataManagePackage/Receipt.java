@@ -1,4 +1,4 @@
-package src.dataManagePackage.Receipt;
+package src.dataManagePackage;
 
 import java.math.BigDecimal;
 

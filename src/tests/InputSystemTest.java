@@ -1,10 +1,10 @@
 package src.tests;
 
 import src.dataManagePackage.Database;
-import src.dataManagePackage.Receipt.Receipt;
+import src.dataManagePackage.Receipt;
 import src.dataManagePackage.Taxpayer;
 import src.inputManagePackage.InputSystem;
-import src.inputManagePackage.ParsingTags;
+import src.managerTags.ParsingTags;
 import org.junit.Test;
 
 import java.io.BufferedReader;

@@ -1,7 +1,7 @@
 package src.tests;
 
 import src.dataManagePackage.Database;
-import src.dataManagePackage.Receipt.Receipt;
+import src.dataManagePackage.Receipt;
 import src.dataManagePackage.Taxpayer;
 import org.junit.Test;
 import java.math.BigDecimal;

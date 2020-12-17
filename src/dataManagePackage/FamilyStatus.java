@@ -34,9 +34,7 @@ public class FamilyStatus {
     public ArrayList<Double> getIncomes() {return incomes;}
     public ArrayList<Double> getValues() {return values;}
 
-    public FamilyStatus(){
-
-    }
+    public FamilyStatus(){ }
 
     public static FamilyStatus initializeFamilyInfo(String familyStatus, ArrayList<ArrayList<Double>> valuesOfStatusList ){
 

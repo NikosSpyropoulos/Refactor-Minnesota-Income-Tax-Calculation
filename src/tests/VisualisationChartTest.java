@@ -54,4 +54,5 @@ public class VisualisationChartTest {
 
         return database.getTaxpayerFromArrayList(TAXPAYER_INDEX_TXT);
     }
+
 }

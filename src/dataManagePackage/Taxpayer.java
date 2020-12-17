@@ -1,5 +1,4 @@
 package src.dataManagePackage;
-import src.dataManagePackage.Receipt.Receipt;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,13 +15,7 @@ public class Taxpayer {
 	private double totalTax;
 	private ArrayList<Receipt> receipts;
 
-
-	public FamilyStatus getFamilyStatusObject(){
-		return familyStatus;
-	}
-
 	public String getFamilyStatus(){
-
 		if (FamilyStatus.SINGLE.equals(getFamilyStatusObject())) {
 			return "Single";
 		} else if (FamilyStatus.MARRIED_FILLING_JOINTLY.equals(getFamilyStatusObject())) {
@@ -33,6 +26,10 @@ public class Taxpayer {
 			return "Married Filling Separately";
 		}
 		return null;
+	}
+
+	public FamilyStatus getFamilyStatusObject(){
+		return familyStatus;
 	}
 
 	public Taxpayer(String name, String afm, FamilyStatus familyStatus, String income){

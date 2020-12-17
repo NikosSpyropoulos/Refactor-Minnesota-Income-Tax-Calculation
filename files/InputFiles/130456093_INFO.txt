@@ -5,15 +5,15 @@ Income: 22570.0
 
 Receipts:
 
-Receipt ID: 4
-Date: 3/5/2014
-Kind: Other
-Amount: 900.0
-Company: Public
+Receipt ID: 1
+Date: 9/1/2020
+Kind: Basic
+Amount: 210.0
+Company: Nikos
 Country: Greece
-City: Ioannina
-Street: Vlahlidou
-Number: 20
+City: Athens
+Street: Stavridi
+Number: 17
 
 Receipt ID: 5
 Date: 3/5/2014

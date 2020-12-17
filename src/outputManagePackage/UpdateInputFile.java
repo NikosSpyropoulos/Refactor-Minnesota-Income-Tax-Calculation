@@ -1,7 +1,9 @@
 package src.outputManagePackage;
 
 import src.dataManagePackage.Database;
-import src.dataManagePackage.Receipt.Receipt;
+import src.dataManagePackage.Receipt;
+import src.managerTags.ParsingTags;
+
 import static constants.ApplicationConstants.*;
 
 import java.io.*;
@@ -25,13 +27,17 @@ public class UpdateInputFile {
 
     public ArrayList<ArrayList<String[]>> getInfoFromTemplateFile() throws IOException {
 
+        ParsingTags parsingTags = new ParsingTags();
+
         ArrayList<ArrayList<String[]>> infoOfFile = new ArrayList<>();
         ArrayList<String[]> taxpayerInfo = new ArrayList<>();
         ArrayList<String[]> receiptsInfo = new ArrayList<>();
         if(typeOfFile.equals(INPUT_FILE_TYPE_TXT)){
+//            infoOfFile = parsingTags.getTagsForUpdatedFile("TagsInputFileTXT");
             initialiseTemplateFileValuesTXT(taxpayerInfo, receiptsInfo);
         }
         else if(typeOfFile.equals(INPUT_FILE_TYPE_XML)){
+//            infoOfFile = parsingTags.getTagsForUpdatedFile("TagsInputFileXML");
             initialiseTemplateFileValuesXML(taxpayerInfo, receiptsInfo);
         }
 
@@ -97,6 +103,13 @@ public class UpdateInputFile {
         if (database.getTaxpayerFromArrayList(taxpayerIndex).getReceiptsArrayList().size() > 0){
 
             outputWriter.println();
+//            if(filePath.endsWith(INPUT_FILE_FORMAT_TXT)) {
+//
+//                outputWriter.println("Receipts:");
+//
+//            }else {
+//                outputWriter.println("<Receipts>");
+//            }
             outputWriter.println(infoFromInputTemplateFile.get(1).get(0)[0]);
             outputWriter.println();
 
@@ -109,6 +122,10 @@ public class UpdateInputFile {
                 }
 
             }
+//            if(filePath.endsWith(INPUT_FILE_FORMAT_XML)){
+//                outputWriter.println();
+//                outputWriter.println("</Receipts>");
+//            }
             if(infoFromInputTemplateFile.get(1).size() == LAST_LINE_OF_XML_FILE){
                 outputWriter.println();
                 outputWriter.println("</Receipts>");

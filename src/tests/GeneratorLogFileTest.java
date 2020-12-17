@@ -3,7 +3,7 @@ package src.tests;
 import src.dataManagePackage.Database;
 import src.dataManagePackage.Taxpayer;
 import org.junit.Test;
-import src.inputManagePackage.ParsingTags;
+import src.managerTags.ParsingTags;
 import src.outputManagePackage.GeneratorLogFile;
 import static constants.ApplicationConstants.*;
 

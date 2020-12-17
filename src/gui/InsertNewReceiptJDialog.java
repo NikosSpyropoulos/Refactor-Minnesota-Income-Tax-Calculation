@@ -1,6 +1,5 @@
 package src.gui;
 import src.dataManagePackage.*;
-import src.dataManagePackage.Receipt.*;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
