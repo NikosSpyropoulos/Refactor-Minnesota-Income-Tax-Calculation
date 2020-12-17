@@ -13,13 +13,7 @@ public class ParsingTags {
         ArrayList<ArrayList<String[]>> infoOfFile = new ArrayList<>();
         ArrayList<String[]> taxpayerInfo = new ArrayList<>();
         ArrayList<String[]> receiptsInfo = new ArrayList<>();
-        FileReader input = null;
-        try {
-            input = new FileReader("files/filesFormat/"+fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BufferedReader bufRead = new BufferedReader(input);
+        BufferedReader bufRead = getBufferedReader(fileName);
         String myLine = null;
         boolean flagReceipts = false; //first line of receipts info
 
@@ -32,9 +26,11 @@ public class ParsingTags {
                 }
                 if(myLine.equals("Receipts:")){flagReceipts=true; continue;}
 
-                if(flagReceipts) receiptsInfo.add(new String[]{myLine + " ", ""});
+                if(flagReceipts) getTxtTags(receiptsInfo, myLine);
 
-                else taxpayerInfo.add(new String[]{myLine + " ", ""});
+                else {
+                    getTxtTags(taxpayerInfo, myLine);
+                }
             }
         }
         else{
@@ -47,15 +43,11 @@ public class ParsingTags {
                 if(myLine.equals("<Receipts>")){flagReceipts=true; continue;}
 
                 if(flagReceipts) {
-                    String[] receiptsArray = new String[2];
-                    receiptsArray[0] = myLine.split("\\s+")[0] + " ";
-                    receiptsArray[1] = " " + myLine.split("\\s+")[1];
+                    String[] receiptsArray = getXmlTags(myLine);
                     receiptsInfo.add(receiptsArray);
                 }
                 else {
-                    String[] taxpayerArray = new String[2];
-                    taxpayerArray[0] = myLine.split("\\s+")[0] + " ";
-                    taxpayerArray[1] = " " + myLine.split("\\s+")[1];
+                    String[] taxpayerArray = getXmlTags(myLine);
                     taxpayerInfo.add(taxpayerArray);
                 }
             }
@@ -68,13 +60,7 @@ public class ParsingTags {
     public  ArrayList<String[]> getTagsForLogFile(String fileName) {
 
         ArrayList<String[]> taxpayerInfo = new ArrayList<>();
-        FileReader input = null;
-        try {
-            input = new FileReader("files/filesFormat/"+fileName);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BufferedReader bufRead = new BufferedReader(input);
+        BufferedReader bufRead = getBufferedReader(fileName);
         String myLine = null;
 
         if(fileName.equals("TagsLogFileTXT")){
@@ -84,7 +70,7 @@ public class ParsingTags {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                taxpayerInfo.add(new String[]{myLine + " ", ""});
+                getTxtTags(taxpayerInfo, myLine);
             }
         }
         else if(fileName.equals("TagsLogFileXML")){
@@ -94,12 +80,32 @@ public class ParsingTags {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                String[] taxPayerArray = new String[2];
-                taxPayerArray[0] = myLine.split("\\s+")[0]+ " ";
-                taxPayerArray[1] = " " + myLine.split("\\s+")[1];
+                String[] taxPayerArray = getXmlTags(myLine);
                 taxpayerInfo.add(taxPayerArray);
             }
         }
         return taxpayerInfo;
     }
+
+    private BufferedReader getBufferedReader(String fileName) {
+        FileReader input = null;
+        try {
+            input = new FileReader("files/filesFormat/" + fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return new BufferedReader(input);
+    }
+
+    private void getTxtTags(ArrayList<String[]> txtTags, String myLine) {
+        txtTags.add(new String[]{myLine + " ", ""});
+    }
+
+    private String[] getXmlTags(String myLine) {
+        String[] xmlTags = new String[2];
+        xmlTags[0] = myLine.split("\\s+")[0] + " ";
+        xmlTags[1] = " " + myLine.split("\\s+")[1];
+        return xmlTags;
+    }
+
 }

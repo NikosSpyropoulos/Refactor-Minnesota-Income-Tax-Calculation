@@ -40,7 +40,7 @@ public class InputSystem {
 		}
 	}
 
-	public void loadTaxpayerDataFromFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile) throws IOException {
+	public void loadTaxpayerDataFromFileIntoDatabase(String afmInfoFileFolderPath, String afmInfoFile) {
 
 		Scanner inputStream = openFile(afmInfoFileFolderPath, afmInfoFile);
 		Taxpayer newTaxpayer = initializeTaxpayer(inputStream);
@@ -71,13 +71,17 @@ public class InputSystem {
 		return inputStream;
 	}
 
-	private Taxpayer initializeTaxpayer(Scanner inputStream) throws IOException {
+	private Taxpayer initializeTaxpayer(Scanner inputStream) {
 
 		ArrayList<String> fileLines = getLinesFromFile(inputStream, END_OF_TAXPAYER_INFO, TAXPAYER, null);
 		ArrayList<String> newTaxpayerInfo = getDataFromFile(fileLines, TAXPAYER);
 		ArrayList<ArrayList<Double>> valuesOfStatusList = new ArrayList<>();
 
-		valuesOfStatusList = getValuesOfStatus(newTaxpayerInfo.get(STATUS));
+		try {
+			valuesOfStatusList = getValuesOfStatus(newTaxpayerInfo.get(STATUS));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		Taxpayer newTaxpayer = new Taxpayer(newTaxpayerInfo.get(TAXPAYER_NAME), newTaxpayerInfo.get(AFM),
 				FamilyStatus.initializeFamilyInfo(newTaxpayerInfo.get(STATUS), valuesOfStatusList) , newTaxpayerInfo.get(INCOME));
 		return newTaxpayer;
