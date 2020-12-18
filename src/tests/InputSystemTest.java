@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static constants.ApplicationConstants.*;
+import static src.constants.ApplicationConstants.*;
 import static junit.framework.TestCase.assertEquals;
 
 

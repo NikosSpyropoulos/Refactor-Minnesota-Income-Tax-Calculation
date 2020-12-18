@@ -2,7 +2,7 @@ package src.dataManagePackage;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import static constants.ApplicationConstants.*;
+import static src.constants.ApplicationConstants.*;
 
 public class Taxpayer {
 	private String name;

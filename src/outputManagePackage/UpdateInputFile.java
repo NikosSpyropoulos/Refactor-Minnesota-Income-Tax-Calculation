@@ -4,7 +4,7 @@ import src.dataManagePackage.Database;
 import src.dataManagePackage.Receipt;
 import src.managerTags.ParsingTags;
 
-import static constants.ApplicationConstants.*;
+import static src.constants.ApplicationConstants.*;
 
 import java.io.*;
 import java.util.ArrayList;

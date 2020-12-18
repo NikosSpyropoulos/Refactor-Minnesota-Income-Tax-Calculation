@@ -2,7 +2,7 @@
 eclipse.buildId=4.16.0.I20200604-0540
 java.version=1.8.0_151
 java.vendor=Oracle Corporation
-BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+BootLoader src.constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
 Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY org.eclipse.jface 2 0 2020-09-07 17:36:44.336

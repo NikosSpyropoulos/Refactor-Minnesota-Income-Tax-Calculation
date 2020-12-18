@@ -7,7 +7,7 @@ import src.managerTags.ParsingTags;
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
-import static constants.ApplicationConstants.*;
+import static src.constants.ApplicationConstants.*;
 
 public class GeneratorLogFile {
 

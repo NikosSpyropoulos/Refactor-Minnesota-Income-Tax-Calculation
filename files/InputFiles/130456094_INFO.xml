@@ -5,16 +5,6 @@
 
 <Receipts>
 
-<ReceiptID> 2 </ReceiptID>
-<Date> 10/5/2014 </Date>
-<Kind> Entertainment </Kind>
-<Amount> 2000.0 </Amount>
-<Company> Hotel Du Lac </Company>
-<Country> Greece </Country>
-<City> Ioannina </City>
-<Street> Lake </Street>
-<Number> 89 </Number>
-
 <ReceiptID> 3 </ReceiptID>
 <Date> 5/6/2014 </Date>
 <Kind> Basic </Kind>
@@ -24,5 +14,55 @@
 <City> Ioannina </City>
 <Street> Averof </Street>
 <Number> 100 </Number>
+
+<ReceiptID> 4 </ReceiptID>
+<Date> 25/2/2019 </Date>
+<Kind> Basic </Kind>
+<Amount> 2400.0 </Amount>
+<Company> Oman </Company>
+<Country> Greece </Country>
+<City> Arta </City>
+<Street> Katikou </Street>
+<Number> 4 </Number>
+
+<ReceiptID> 5 </ReceiptID>
+<Date> 10/5/2016 </Date>
+<Kind> Entertainment </Kind>
+<Amount> 5000.0 </Amount>
+<Company> Hilton </Company>
+<Country> Greece </Country>
+<City> Athens </City>
+<Street> Alexandrou </Street>
+<Number> 89 </Number>
+
+<ReceiptID> 7 </ReceiptID>
+<Date> 5/6/2015 </Date>
+<Kind> Basic </Kind>
+<Amount> 3000.0 </Amount>
+<Company> Praktiker </Company>
+<Country> Greece </Country>
+<City> Ioannina </City>
+<Street> Trenidi </Street>
+<Number> 100 </Number>
+
+<ReceiptID> 8 </ReceiptID>
+<Date> 11/8/2016 </Date>
+<Kind> Entertainment </Kind>
+<Amount> 500.0 </Amount>
+<Company> Zoo </Company>
+<Country> Greece </Country>
+<City> Kiato </City>
+<Street> Megalou </Street>
+<Number> 89 </Number>
+
+<ReceiptID> 9 </ReceiptID>
+<Date> 5/6/2015 </Date>
+<Kind> Basic </Kind>
+<Amount> 300.0 </Amount>
+<Company> Supermarket </Company>
+<Country> Greece </Country>
+<City> Mala </City>
+<Street> Domidi </Street>
+<Number> 10 </Number>
 
 </Receipts>

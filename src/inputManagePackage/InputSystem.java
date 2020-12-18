@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import static constants.ApplicationConstants.*;
+import static src.constants.ApplicationConstants.*;
 
 public class InputSystem {
 

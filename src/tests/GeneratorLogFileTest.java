@@ -5,7 +5,7 @@ import src.dataManagePackage.Taxpayer;
 import org.junit.Test;
 import src.managerTags.ParsingTags;
 import src.outputManagePackage.GeneratorLogFile;
-import static constants.ApplicationConstants.*;
+import static src.constants.ApplicationConstants.*;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

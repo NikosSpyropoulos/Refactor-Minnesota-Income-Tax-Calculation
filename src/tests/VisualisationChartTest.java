@@ -5,7 +5,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.junit.Test;
 import src.outputManagePackage.VisualisationChart;
-import static constants.ApplicationConstants.*;
+import static src.constants.ApplicationConstants.*;
 import java.util.ArrayList;
 import java.util.List;
 

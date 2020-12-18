@@ -15,22 +15,42 @@ City: Athens
 Street: Stavridi
 Number: 17
 
-Receipt ID: 5
-Date: 3/5/2014
+Receipt ID: 6
+Date: 3/5/2019
 Kind: Other
-Amount: 600.0
-Company: Toys Store
+Amount: 800.0
+Company: Supermarket
 Country: Greece
-City: Ioannina
-Street: Omhrou
+City: Arta
+Street: Papandreou
 Number: 5
 
-Receipt ID: 1
-Date: 9/1/2020
+Receipt ID: 7
+Date: 9/1/2010
 Kind: Basic
 Amount: 210.0
-Company: Nikos
+Company: Milt AE
 Country: Greece
 City: Athens
-Street: Stavridi
+Street: Mpeh
 Number: 17
+
+Receipt ID: 16
+Date: 3/10/2009
+Kind: Basic
+Amount: 500.0
+Company: Papadopoulos
+Country: Greece
+City: Ioannina
+Street: Papaloukou
+Number: 5
+
+Receipt ID: 17
+Date: 9/10/2020
+Kind: Entertainment
+Amount: 2100.0
+Company: Dulac
+Country: Greece
+City: Ioannina
+Street: Mpertouli
+Number: 172
