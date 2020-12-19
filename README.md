@@ -10,5 +10,5 @@ is based on a complex algorithm provided b the Minnesota state. The application 
 representations of the data in terms of bar and pie charts. Finally. the application produces respective output
 reports in txt or xml. 
 
-More information about the issues and the refactoring methods that we used to resolve them are being explained in the file "FinalReport.pdf"
+More information about the issues and the refactoring methods that we used to resolve them are being explained in the file "finalReport.pdf"
 and at the "demo_Video.mp4" (greek Language)
