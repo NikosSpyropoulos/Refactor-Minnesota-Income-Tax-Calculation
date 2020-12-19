@@ -5,6 +5,16 @@ Income: 22570.0
 
 Receipts:
 
+Receipt ID: 5
+Date: 3/5/2014
+Kind: Other
+Amount: 600.0
+Company: Toys Store
+Country: Greece
+City: Ioannina
+Street: Omhrou
+Number: 5
+
 Receipt ID: 1
 Date: 9/1/2020
 Kind: Basic

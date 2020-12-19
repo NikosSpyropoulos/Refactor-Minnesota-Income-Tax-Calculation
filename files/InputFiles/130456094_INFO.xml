@@ -5,26 +5,6 @@
 
 <Receipts>
 
-<ReceiptID> 3 </ReceiptID>
-<Date> 5/6/2014 </Date>
-<Kind> Basic </Kind>
-<Amount> 4000.0 </Amount>
-<Company> IKEA </Company>
-<Country> Greece </Country>
-<City> Ioannina </City>
-<Street> Averof </Street>
-<Number> 100 </Number>
-
-<ReceiptID> 4 </ReceiptID>
-<Date> 25/2/2019 </Date>
-<Kind> Basic </Kind>
-<Amount> 2400.0 </Amount>
-<Company> Oman </Company>
-<Country> Greece </Country>
-<City> Arta </City>
-<Street> Katikou </Street>
-<Number> 4 </Number>
-
 <ReceiptID> 5 </ReceiptID>
 <Date> 10/5/2016 </Date>
 <Kind> Entertainment </Kind>
